@@ -1,0 +1,518 @@
+{
+  "STICKER": [
+    {
+      "code": "ST175",
+      "size": "1*0.75",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST1575",
+      "size": "1.5*0.75",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST151",
+      "size": "1.5*1",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST125175",
+      "size": "1.25*1.75",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST32",
+      "size": "3*2",
+      "gsm": "NA",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST12",
+      "size": "1*2",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST1218",
+      "size": "12*18",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST64",
+      "size": "6*4",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "ST53",
+      "size": "6*3",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "ENVELOPE": [
+    {
+      "code": "EN7045",
+      "size": "4*5",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN7047",
+      "size": "4*7",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN7058",
+      "size": "5.5*8",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN70811",
+      "size": "4*7",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN7047",
+      "size": "8.5*11",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN7049",
+      "size": "4*9",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN6045",
+      "size": "4*5",
+      "gsm": "60",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN6047",
+      "size": "4*7",
+      "gsm": "60",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN6058",
+      "size": "5.5*8",
+      "gsm": "60",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN60811",
+      "size": "8.5*11",
+      "gsm": "60",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "EN6049",
+      "size": "4*9",
+      "gsm": "60",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "LETTERPAD": [
+    {
+      "code": "LP7045",
+      "size": "4.25*5.5",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LP7058",
+      "size": "5.5*8.5",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LP70811",
+      "size": "8.5*11",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LP8058",
+      "size": "5.5*8.5",
+      "gsm": "80",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LP80811",
+      "size": "8.5*11",
+      "gsm": "80",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LP10058",
+      "size": "5.5*8.5",
+      "gsm": "100",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LP100811",
+      "size": "8.5*11",
+      "gsm": "100",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LH7058",
+      "size": "5.5*8.5",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LH70811",
+      "size": "8.5*11",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LH8058",
+      "size": "5.5*8.5",
+      "gsm": "80",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LH80811",
+      "size": "8.5*11",
+      "gsm": "80",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LH10058",
+      "size": "5.5*8.5",
+      "gsm": "100",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "LH100811",
+      "size": "8.5*11",
+      "gsm": "100",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "BILL BOOK": [
+    {
+      "code": "BB7058",
+      "size": "5.5*8.5",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "BB70811",
+      "size": "8.5*11",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "NON WOVEN D CUT": [
+    {
+      "code": "DCUT810",
+      "size": "8*10",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE SINGLE COLOR PRINTING"
+    },
+    {
+      "code": "DCUT912",
+      "size": "9*12",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE SINGLE COLOR PRINTING"
+    },
+    {
+      "code": "DCUT1014",
+      "size": "10*14",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE SINGLE COLOR PRINTING"
+    },
+    {
+      "code": "DCUT1216",
+      "size": "12*16",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE SINGLE COLOR PRINTING"
+    },
+    {
+      "code": "DCUT1419",
+      "size": "14*19",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE SINGLE COLOR PRINTING"
+    }
+  ],
+  "DOT MATRIX BILL": [
+    {
+      "code": "DM7046",
+      "size": "4*6",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "XRAY BAG": [
+    {
+      "code": "XR1501115",
+      "size": "11*15",
+      "gsm": "150",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "XR1501621",
+      "size": "16*21",
+      "gsm": "150",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "FILE": [
+    {
+      "code": "FL250SS",
+      "size": "9*12",
+      "gsm": "250",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FL250BS",
+      "size": "9*13",
+      "gsm": "250",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FL300SS",
+      "size": "9*12",
+      "gsm": "300",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FL300BS",
+      "size": "9*13",
+      "gsm": "300",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FL350SS",
+      "size": "9*12",
+      "gsm": "350",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FL350BS",
+      "size": "9*13",
+      "gsm": "350",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FLPVC300",
+      "size": "9*12",
+      "gsm": "350",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FLPVC350",
+      "size": "9*12",
+      "gsm": "350",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "FL15350BS",
+      "size": "15*20",
+      "gsm": "300",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "PAMPHLET": [
+    {
+      "code": "PP6058",
+      "size": "8.5*11",
+      "gsm": "60",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "PP60811",
+      "size": "9*13",
+      "gsm": "300",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "PP7058",
+      "size": "5.5*8.5",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "PP70811",
+      "size": "8.5*11",
+      "gsm": "70",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "PP9058",
+      "size": "5.5*8.5",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "PP90811",
+      "size": "8.5*11",
+      "gsm": "90",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "VISITING_CARD": [
+    {
+      "code": "VC250SS",
+      "size": "3.5*2",
+      "gsm": "250",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "VC250BS",
+      "size": "3.5*2",
+      "gsm": "250",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "VC300SS",
+      "size": "3.5*2",
+      "gsm": "300",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "VC300BS",
+      "size": "3.5*2",
+      "gsm": "300",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "VC350SS",
+      "size": "3.5*2",
+      "gsm": "300",
+      "category": "SINGLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "VC350BS",
+      "size": "3.5*2",
+      "gsm": "350",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "PEN": [
+    {
+      "code": "NA",
+      "size": "NA",
+      "gsm": "NA",
+      "category": "SINGLE SIDE PRINTING"
+    }
+  ],
+  "KEYCHAIN": [
+    {
+      "code": "KC",
+      "size": "NA",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE PRINTING"
+    }
+  ],
+  "NON WOVEN HANDLE": [
+    {
+      "code": "NW1420",
+      "size": "14*20",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE PRINTING"
+    }
+  ],
+  "DOT_MATRIX_BILL": [
+    {
+      "code": "DM70754",
+      "size": "7.5*4",
+      "gsm": "70",
+      "category": "SINGLE SIDE PRINTING"
+    }
+  ],
+  "PVC_BAG": [
+    {
+      "code": "PVB1626",
+      "size": "16*26",
+      "gsm": "150",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "PVB1115",
+      "size": "11*15",
+      "gsm": "150",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "COMBO": [
+    {
+      "code": "CM",
+      "size": "NA",
+      "gsm": "70",
+      "category": "MULTICOLOR PRINTING"
+    }
+  ],
+  "CLIP_BOARD": [
+    {
+      "code": "CPB",
+      "size": "NA",
+      "gsm": "NA",
+      "category": "MULTICOLOR PRINTING"
+    }
+  ],
+  "HANDLE_BAG": [
+    {
+      "code": "HB12155",
+      "size": "12*15*5",
+      "gsm": "NA",
+      "category": "DOUBLE SIDE PRINTING"
+    }
+  ],
+  "AUSHADHI_ENVELOP": [
+    {
+      "code": "END45",
+      "size": "4*5",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "AUE47",
+      "size": "4*7",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "DAWAI_ENVELOP": [
+    {
+      "code": "END47",
+      "size": "4*7",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "END58",
+      "size": "5.5*8",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    },
+    {
+      "code": "END45",
+      "size": "4*5",
+      "gsm": "70",
+      "category": "DOUBLE SIDE MULTICOLOR PRINTING"
+    }
+  ],
+  "PENSTAND": [
+    {
+      "code": "PS",
+      "size": "NA",
+      "gsm": "NA",
+      "category": "MULTICOLOR PRINTING"
+    }
+  ]
+}

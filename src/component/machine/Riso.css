@@ -1,0 +1,27 @@
+@media print {
+    body * {
+      visibility: hidden; /* Hide everything by default */
+    }
+  
+    .print-container, .print-container * {
+      visibility: visible; /* Only show print container */
+    }
+  
+    .print-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 90%;
+      display: block;
+    }
+    .print-container img {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+  
+    /* Optional: Hide the print button and any other non-print elements */
+    button {
+      display: none;
+    }
+  }

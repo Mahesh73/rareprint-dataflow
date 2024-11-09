@@ -1,0 +1,7 @@
+.product{
+    margin: 20px;
+}
+.product-header{
+    display: flex;
+    justify-content: space-between;
+}
