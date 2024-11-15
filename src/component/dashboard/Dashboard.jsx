@@ -117,6 +117,10 @@ const Dashboard = () => {
         Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
       {
+        Header: "Order Age",
+        accessor: "age",
+      },
+      {
         Header: "Updated Date",
         accessor: "updatedAt",
         Cell: ({ value }) => new Date(value).toLocaleDateString(),

@@ -22,13 +22,14 @@ const ViewProduct = ({ showModal, setShowModal, details }) => {
       show={showModal}
       onHide={() => setShowModal(false)}
       size="lg"
+      centered
     >
       <Modal.Header closeButton>
         <Modal.Title>Product History </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <div>
-          <Table>
+      <Modal.Body style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+       <div style={{ overflowX: 'auto' }}>
+          <Table responsive="sm">
             <thead>
               <tr>
                 <th>Name</th>
@@ -69,7 +70,7 @@ const ViewProduct = ({ showModal, setShowModal, details }) => {
               })}
             </tbody>
           </Table>
-        </div>
+          </div>
       </Modal.Body>
     </Modal>
   );
