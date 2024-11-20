@@ -1,7 +1,7 @@
-import React from "react";
+import React , {useEffect}from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-const SheetProduction = ({ formData, setFormData }) => {
+const SheetProduction = ({ formData, setFormData, setIsSheetFieldsFilled }) => {
   const sheetSize = [0.75, 1.5, 2, 3, 6, 12];
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,6 +16,14 @@ const SheetProduction = ({ formData, setFormData }) => {
   //       file: e.target.files[0],
   //     });
   //   };
+
+  // BOC by mahendra 
+  useEffect(() => {
+    // Check if both the fields are filled
+    const isFilled = formData.selectSheetSize && formData.dueDate;
+    setIsSheetFieldsFilled(isFilled);
+  }, [formData, setIsSheetFieldsFilled]);
+  // EOC by mahendra
   return (
     <Row>
       <Col lg="3">

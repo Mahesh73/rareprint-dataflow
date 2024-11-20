@@ -1,27 +1,56 @@
+
+
+/* BOC by mahendra */
+.print-container {
+  display: none; /* Hide by default */
+}
+
+.button-dispatch {
+  min-width: 80px; /* Set a minimum width for the button */
+  padding: 5px; /* Add padding for better click area */
+  font-size: 14px; /* Set a larger font size */
+}
+
 @media print {
-    body * {
-      visibility: hidden; /* Hide everything by default */
-    }
-  
-    .print-container, .print-container * {
-      visibility: visible; /* Only show print container */
-    }
-  
-    .print-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 90%;
-      display: block;
-    }
-    .print-container img {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-  
-    /* Optional: Hide the print button and any other non-print elements */
-    button {
-      display: none;
-    }
+  table {
+    display: none;
   }
+  body {
+    margin: 0; /* Remove default margins */
+  }
+   header, /* If your header is a <header> element */
+  .navbar, /* If you have a navbar class */
+  .hamburger-menu, /* If your hamburger menu has this class */
+  .other-elements-to-hide, /* Add any other class or element you want to hide */
+  .sidebar, /* If you have a sidebar */
+  .footer { /* If you have a footer */
+    display: none;
+  }
+  .nav, /* Nav bar with links for RISO, XEROX, TOYOCUT */
+  .nav-item, /* Individual items in the nav */
+  .nav-link { /* Individual links in the nav */
+    display: none; /* Hide navigation during printing */
+  }
+
+  .print-container {
+    display: flex; /* Show when printing */
+    position: fixed; /* Positioning to cover the full page */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center; /* Center the image */
+    align-items: center; /* Center the image vertically */
+    background-color: white; /* Optional: set background color */
+    overflow: hidden; /* Prevent overflow */
+  }
+  .print-image {
+    width: auto; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    object-fit: cover; /* Maintain aspect ratio and fit within the container */
+    display: block;
+    margin: 0 auto;
+  }
+}
+/* EOC by mahendra  */

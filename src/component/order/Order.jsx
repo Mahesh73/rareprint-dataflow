@@ -73,6 +73,8 @@ const Order = () => {
           [key]: res[key],
         });
       }, {});
+
+
     try {
       if (location.state) {
         axiosInstance
@@ -98,6 +100,9 @@ const Order = () => {
     }
   };
 
+
+ 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const advance = {
@@ -105,6 +110,8 @@ const Order = () => {
       advanceDate,
       advanceType,
     };
+
+
     formData["advance"] =
       paymentMethod === "Advance" ? JSON.stringify(advance) : "0";
     formData["paymentMethod"] = paymentMethod;
@@ -196,10 +203,16 @@ const Order = () => {
     }
   };
 
+  // BOC by mahendra
+  const goToDashboard = () => {
+    navigate("/"); // Navigate to the home page or dashboard
+  };
+  // EOC by mahendra
+
   return (
     <div className="order-container">
       <Breadcrumb>
-        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        <Breadcrumb.Item onClick={goToDashboard} style={{ cursor: 'pointer' }}>Dashboard</Breadcrumb.Item>
         <Breadcrumb.Item active>
           {location.state ? "Edit Order" : "Create Order"}
         </Breadcrumb.Item>
@@ -362,7 +375,8 @@ const Order = () => {
                 variant="primary"
                 style={{ marginTop: "31px" }}
                 onClick={handleShowModal}
-                disabled={formData.product === "" || formData.category === ""}
+                // disabled={formData.product === "" || formData.category === ""}
+                disabled={!formData.product || !formData.category}
               >
                 <Plus />
               </Button>

@@ -8,6 +8,7 @@ import StartProduction from "./StartProduction";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { confirmationDialog } from "../../common/ConfirmationDialog";
+import {  useNavigate } from "react-router-dom"; /*Added by mahendra*/
 const Production = () => {
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState(false);
@@ -59,6 +60,13 @@ const Production = () => {
     setSelectedOrder(row);
     setShow(true);
   };
+
+  // BOC by mahendra 
+  let navigate = useNavigate();
+  const goToDashboard = () => {
+    navigate("/"); // Navigate to the home page or dashboard
+  };
+  // EOC by mahendra
 
   const columns = React.useMemo(
     () => [
@@ -221,7 +229,7 @@ const Production = () => {
         }}
       >
         <Breadcrumb>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item onClick={goToDashboard} style={{ cursor: 'pointer' }}>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>Production</Breadcrumb.Item>
         </Breadcrumb>
       </div>

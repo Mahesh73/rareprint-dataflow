@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-const InHouseProd = ({ formData, setFormData, productionData }) => {
+const InHouseProd = ({ formData, setFormData, productionData,setIsMachineSelected }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -10,6 +10,7 @@ const InHouseProd = ({ formData, setFormData, productionData }) => {
     });
     if (name === "selectMachine") {
       formData.selectPaper = "";
+      // setIsMachineSelected(value !== ""); // Set to true if a machine is selected
     }
   };
   // const handleFileChange = (e) => {

@@ -45,6 +45,7 @@ const StartProduction = ({
     otherDetails: "",
     prodQty: 0,
     afterPrint: "",
+    selectSheetSize: "",
   });
 
   const changeType = (value) => {
@@ -63,7 +64,10 @@ const StartProduction = ({
       otherDetails: "",
       prodQty: 0,
       afterPrint: "",
+      selectSheetSize: "", // Reset selectSheetSize
     });
+    // setIsMachineSelected(false); // Reset machine selection when changing type
+    setIsSheetFieldsFilled(false); // Reset sheet fields state
   };
   const submitInHouse = (_formData) => {
     if (productionData) {
@@ -117,6 +121,7 @@ const StartProduction = ({
     } else if (type === "outsource") {
       submitOutSource(formData);
     }
+    
   };
   useEffect(() => {
     if (productionData) {
@@ -139,9 +144,15 @@ const StartProduction = ({
       otherDetails: "",
       prodQty: 0,
       afterPrint: "",
+      selectSheetSize: "",
     });
     setShow(false);
   };
+
+  // BOC by mahendra
+  // const [isMachineSelected, setIsMachineSelected] = useState(false);
+  const [isSheetFieldsFilled, setIsSheetFieldsFilled] = useState(false);
+  // EOC by mahendra
   return (
     <Modal show={show} onHide={closeModel} size="lg" backdrop="static">
       <Modal.Header closeButton>
@@ -178,15 +189,24 @@ const StartProduction = ({
               formData={formData}
               setFormData={setFormData}
               productionData={productionData}
+              // setIsMachineSelected={setIsMachineSelected} // Pass the function here
             />
           )}
           {type === "outsource" && (
             <Outsource formData={formData} setFormData={setFormData} />
           )}
           {type === "sheetProduction" && (
-            <SheetProduction formData={formData} setFormData={setFormData} />
+            <SheetProduction formData={formData} setFormData={setFormData}  setIsSheetFieldsFilled={setIsSheetFieldsFilled} />
           )}
-          <Button variant="primary" type="submit" className="mt-5">
+          <Button variant="primary" type="submit" className="mt-5" 
+          disabled={
+             (type === "sheetProduction" &&
+              !isSheetFieldsFilled &&
+              !productionData // Disable only for "Start Production" (if no fields filled)
+              ) || (type === "inHouse" && (formData.selectMachine !== "riso" && formData.selectMachine !== "xerox") && !productionData) ||
+              (type === "outsource" && (formData.selectVendor == "" || formData.selectVendor == "Select Vendor")&& !productionData)
+            }
+            >
             {productionData ? "Update Production" : "Start Production"}
           </Button>
         </Form>

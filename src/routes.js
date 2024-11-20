@@ -4,6 +4,7 @@ import Order from "./component/order/Order";
 import Product from "./component/product/Product";
 import Production from "./component/production/Production";
 import Packaging from "./component/packaging/Packaging";
+import Vendor from "./component/vendor/vendor"
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
   {
     path: "/packaging",
     element: <Packaging />,
+  },
+  {
+    path: "/vendor",
+    element: <Vendor/>,
   },
 ];
 

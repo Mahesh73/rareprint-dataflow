@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 const AddProduct = ({
   setShowModal,
@@ -14,11 +15,26 @@ const AddProduct = ({
   const [modelData, setModelData] = useState({
     quantity: edit ? products[productDetail.index].quantity : 0,
     amount: edit ? products[productDetail.index].amount : 0,
-    design: null,
+    // design: null,
+    design: edit ? products[productDetail.index].design : null, // Store the file or null for new product
     productDescription: edit
       ? products[productDetail.index].productDescription
       : "",
   });
+
+  // BOC by mahendra 
+  useEffect(() => {
+    if (edit) {
+      setModelData({
+        quantity: products[productDetail.index].quantity,
+        amount: products[productDetail.index].amount,
+        design: products[productDetail.index].design, // This will keep the previously attached design
+        productDescription: products[productDetail.index].productDescription,
+      });
+    }
+  }, [edit, productDetail.index, products]);
+  // EOC by mahendra
+
   const handleCloseModal = () => setShowModal(false);
   const handleAddProduct = () => {
     if (modelData.quantity && modelData.amount) {
@@ -56,10 +72,18 @@ const AddProduct = ({
       [name]: value,
     });
   };
+  // const handleFileChange = (e) => {
+  //   setModelData({
+  //     ...modelData,
+  //     design: e.target.files[0],
+  //   });
+  // };
+
   const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Get the file
     setModelData({
       ...modelData,
-      design: e.target.files[0],
+      design: file, // Set the file in the state
     });
   };
   return (
@@ -104,6 +128,11 @@ const AddProduct = ({
                 name="design"
                 onChange={handleFileChange}
               />
+              {modelData.design && (
+                <small className="d-block mt-2">
+                  <strong>Current File: </strong>{modelData.design.name}
+                </small>
+              )}
             </Form.Group>
           </Row>
           <Row>
