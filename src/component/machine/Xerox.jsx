@@ -72,19 +72,24 @@ const Xerox = ({ data, setData }) => {
               <td>{item.quantity}</td>
               <td>{item.prodQty}</td>
               <td style={{ cursor: "pointer" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <PrinterFill
                   title="Start Printing"
+                  style={{ marginRight: '10px' }}
                   onClick={() => startPrinting(item._id)}
                 />
                 <TrashFill
                   className="mx-2"
+                  style={{ marginRight: '10px' }}
                   onClick={() => deleteProduction(item._id)}
                 />
+                <Button variant="primary"  style={{ marginRight: '10px' }} className="mx-2 button-dispatch"> Dispatch</Button>
                 {item.afterPrint && (
                   <Button size="sm" onClick={() => printingCompleted(item)}>
                     Printing Completed
                   </Button>
                 )}
+                </div>
               </td>
             </tr>
           );

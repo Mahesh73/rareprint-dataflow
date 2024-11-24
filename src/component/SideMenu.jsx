@@ -21,6 +21,9 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
                     <ListGroup.Item action href="/packaging">
                         Packaging
                     </ListGroup.Item>
+                    <ListGroup.Item action href="/vendor">
+                        Vendor
+                    </ListGroup.Item>
                     {/* <ListGroup.Item action href="/product">
                         Product
                     </ListGroup.Item>

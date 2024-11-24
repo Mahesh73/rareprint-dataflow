@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { confirmationDialog } from "../../common/ConfirmationDialog";
 import { useNavigate } from "react-router-dom";
 import "./Riso.css";
+import { Button } from "react-bootstrap"; // Import Button from react-bootstrap
 
 const Riso = ({ data, setData }) => {
   const navigate = useNavigate();
@@ -156,8 +157,10 @@ const Riso = ({ data, setData }) => {
               <td>{item.prodQty}</td>
               <td style={{minWidth: '125px'}}>{new Date(item.createdAt).toLocaleDateString()}</td>
               <td style={{ cursor: "pointer" }}>
+                 <div style={{ display: "flex", alignItems: "center" }}>
                 <PrinterFill
                   title="Start Printing"
+                  style={{ marginRight: '10px' }}
                   onClick={() =>
                     startPrinting(
                       item.orderId,
@@ -169,8 +172,12 @@ const Riso = ({ data, setData }) => {
                 />
                 <TrashFill
                   className="mx-2"
+                  style={{ marginRight: '10px' }}
                   onClick={() => deleteProduction(item._id)}
                 />
+                <Button variant="primary" className="mx-2 button-dispatch"> Dispatch</Button>
+              </div>
+
               </td>
             </tr>
           );
@@ -178,7 +185,9 @@ const Riso = ({ data, setData }) => {
       </tbody>
     </Table>
     <div className="print-container">
-      <img src="http://localhost:5000/uploads/1729419550254-envelope.jpg" />
+      <img src="http://localhost:5000/uploads/1729419550254-envelope.jpg"
+       className="print-image"
+       alt="Print Image" />
     </div>
     </Container>
   );
