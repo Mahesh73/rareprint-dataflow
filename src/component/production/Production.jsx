@@ -8,14 +8,18 @@ import StartProduction from "./StartProduction";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { confirmationDialog } from "../../common/ConfirmationDialog";
-import {  useNavigate } from "react-router-dom"; /*Added by mahendra*/
+import { useNavigate } from "react-router-dom"; /*Added by mahendra*/
+import { AgGridReact } from "ag-grid-react"; /*Added by mahendra*/
+import "./Production.css"
 const Production = () => {
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
+  const [rows, setRows] = useState([]);
   useEffect(() => {
     axiosInstance.get("/api/production-details").then((res) => {
       setOrders(res.data);
+      setRows(res.data);
     });
   }, [show]);
   const deleteProduct = async (orderId, productId) => {
@@ -61,164 +65,251 @@ const Production = () => {
     setShow(true);
   };
 
-  // BOC by mahendra 
+  // BOC by mahendra
   let navigate = useNavigate();
   const goToDashboard = () => {
     navigate("/"); // Navigate to the home page or dashboard
   };
   // EOC by mahendra
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Invoice No",
-        accessor: "invoiceNo",
+  const ActionButtonRenderer = (props) => {
+    return (
+      <div>
+        {!props.data?.production && (
+          <GearFill
+            onClick={() => handleShow(props.data)}
+            title="Create Production"
+            className="mx-2"
+          />
+        )}
+
+        {props.data.status[props.data.status.length - 1].status ===
+          "Printing" && (
+          <PencilSquare
+            onClick={() => updateProduction(props.data)}
+            title="Update Production"
+            className="mx-2"
+          />
+        )}
+
+        {props.data.status[props.data.status.length - 1].status !==
+          "Created" && (
+          <TrashFill
+            onClick={() =>
+              deleteProduct(props.data.orderId, props.data.productId)
+            }
+          />
+        )}
+      </div>
+    );
+  };
+
+  const StatusCellRenderer = ({ data }) => {
+    if (data && data.status) {
+      return (
+        <div>
+          <span>{data.status[data.status.length - 1].status}</span>
+          <InfoCircleFill
+            style={{ marginLeft: '5px', cursor: 'pointer', color: '#007bff' }}
+          />
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const DueDateRenderer = (props) => {
+      const currentDate = new Date().setHours(0, 0, 0, 0);
+        const dueDate = new Date(props.data.production?.dueDate).setHours(
+          0,
+          0,
+          0,
+          0
+        );
+        const check =
+          currentDate == dueDate
+            ? "today"
+            : currentDate > dueDate
+            ? "pass"
+            : "wait";
+        return (
+          <span
+            style={{
+              backgroundColor:
+                check === "today"
+                  ? "#FFFF80"
+                  : check === "pass"
+                  ? "red"
+                  : "none",
+              borderRadius: "5px",
+              padding: "1px",
+            }}
+          >
+            {props.data.production?.dueDate}
+          </span>
+        );
+     
+  };
+
+ const ProductiontypeRenderer  = (props) => { 
+    return(
+      <div>
+     
+      </div>
+      )
+  };
+
+  const columns = [
+    {
+      headerName: "Invoice No",
+      field: "invoiceNo",
+    },
+    {
+      headerName: "Customer Name",
+      field: "customerName",
+    },
+    {
+      headerName: "Product Name",
+      field: "productName",
+    },
+    {
+      headerName: "Product Category",
+      field: "productCategory",
+    },
+    {
+      headerName: "Production Type",
+      field: "chooseType",
+      tooltipValueGetter: (params) => {
+        if (params.data && params.data.production) {
+          const { chooseType, selectMachine } = params.data.production;
+    
+          if (chooseType === "outsource") {
+            return "OutSource";
+          } else if (chooseType === "inHouse") {
+            return selectMachine
+              ? `InHouse - Machine: ${selectMachine.toUpperCase()}`
+              : "InHouse";
+          } else if (chooseType === "sheetProduction") {
+            return "Sheet Production";
+          }
+        }
+        return "No Production Type Specified";
       },
-      {
-        Header: "Customer Name",
-        accessor: "customerName",
+      tooltipComponentParams: {
+        html: true, // Allow HTML in tooltip text
       },
-      {
-        Header: "Product Name",
-        accessor: "productName",
+      // cellRenderer: ProductiontypeRenderer,
+      cellRenderer: (params) => {
+        if (params.data && params.data.production) {
+          const { chooseType, selectMachine } = params.data.production;
+    
+          if (chooseType === "outsource") {
+            return "OutSource";
+          } else if (chooseType === "inHouse") {
+            return selectMachine ? `InHouse (${selectMachine.toUpperCase()})` : "InHouse";
+          } else if (chooseType === "sheetProduction") {
+            return "Sheet Production";
+          }
+        }
+       
       },
-      {
-        Header: "Product Category",
-        accessor: "productCategory",
+    
+      // Cell: ({ row }) => {
+      //   return (
+      //     row.original.production &&
+      //     (row.original.production?.chooseType === "outsource" ? (
+      //       "OutSource"
+      //     ) : row.original.production?.chooseType === "inHouse" ? (
+      //       row.original.production.selectMachine ? (
+      //         <OverlayTrigger
+      //           placement="bottom"
+      //           overlay={
+      //             <Tooltip>
+      //               {row.original.production.selectMachine.toUpperCase()}
+      //             </Tooltip>
+      //           }
+      //         >
+      //           <span>InHouse</span>
+      //         </OverlayTrigger>
+      //       ) : (
+      //         "InHouse"
+      //       )
+      //     ) : (
+      //       "Sheet Production"
+      //     ))
+      //   );
+      // },
+    },
+    {
+      headerName: "Size",
+      field: "size",
+    },
+    {
+      headerName: "QTY",
+      field: "qty",
+    },
+    {
+      headerName: "GSM",
+      field: "gsm",
+    },
+    {
+      headerName: "Amount",
+      field: "amount",
+    },
+    {
+      headerName: "Due Date",
+      field: "dueDate",
+      minWidth: 100,
+      cellRenderer: DueDateRenderer, // Use the React component directly
+    },
+    {
+      headerName: "Status",
+      field: "status",
+      minWidth: 110,
+      tooltipValueGetter: (params) => {
+        if (params.data && params.data.status) {
+          return params.data.status
+            .map(
+              (item) =>
+                `${item.status} - ${moment(item.updatedAt).format(
+                  "DD-MM-YYYY"
+                )}\n`
+            )
+            .join(""); // Join all statuses with line breaks
+        }
+        return "";
       },
-      {
-        Header: "Production Type",
-        accessor: "chooseType",
-        Cell: ({ row }) => {
-          return (
-            row.original.production &&
-            (row.original.production?.chooseType === "outsource" ? (
-              "OutSource"
-            ) : row.original.production?.chooseType === "inHouse" ? (
-              row.original.production.selectMachine ? (
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={
-                    <Tooltip>
-                      {row.original.production.selectMachine.toUpperCase()}
-                    </Tooltip>
-                  }
-                >
-                  <span>InHouse</span>
-                </OverlayTrigger>
-              ) : (
-                "InHouse"
-              )
-            ) : (
-              "Sheet Production"
-            ))
-          );
-        },
+      tooltipComponentParams: {
+        html: true, // Allow HTML in tooltip text
       },
-      {
-        Header: "Size",
-        accessor: "size",
-      },
-      {
-        Header: "QTY",
-        accessor: "qty",
-      },
-      {
-        Header: "GSM",
-        accessor: "gsm",
-      },
-      {
-        Header: "Amount",
-        accessor: "amount",
-      },
-      {
-        Header: "Due Date",
-        accessor: "dueDate",
-        minWidth: 100,
-        Cell: ({ row }) => {
-          const currentDate = new Date().setHours(0, 0, 0, 0);
-          const dueDate = new Date(row.original.production?.dueDate).setHours(
-            0,
-            0,
-            0,
-            0
-          );
-          const check =
-            currentDate == dueDate
-              ? "today"
-              : currentDate > dueDate
-              ? "pass"
-              : "wait";
-          return (
-            <span
-              style={{
-                backgroundColor:
-                  check === "today"
-                    ? "#FFFF80"
-                    : check === "pass"
-                    ? "red"
-                    : "none",
-                borderRadius: "5px",
-                padding: "1px",
-              }}
-            >
-              {row.original.production?.dueDate}
-            </span>
-          );
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-        minWidth: 110,
-        Cell: ({ row }) => (
-          <>
-            {row.original.status[row.original.status.length - 1].status} {""}
-            <OverlayTrigger
-              placement="bottom"
-              delay={{ show: 250, hide: 400 }}
-              overlay={(props) => renderTooltip(props, row.original.status)}
-            >
-              <InfoCircleFill />
-            </OverlayTrigger>
-          </>
-        ),
-      },
-      {
-        Header: "Sales Executive",
-        accessor: "salesExecutive",
-      },
-      {
-        Header: "Actions",
-        Cell: ({ row }) => (
-          <div style={{ cursor: "pointer" }}>
-            {!row.original?.production && (
-              <GearFill onClick={() => handleShow(row.original)} 
-              title="Create Production"
-              className="mx-2"/>
-            )}
-            {row.original.status[row.original.status.length - 1].status ===
-              "Printing" && (
-              <PencilSquare
-                onClick={() => updateProduction(row.original)}
-                title="Update Production"
-                className="mx-2"
-              />
-            )}
-            {row.original.status[row.original.status.length - 1].status !==
-              "Created" && <TrashFill
-              onClick={() =>
-                deleteProduct(row.original.orderId, row.original.productId)
-              }
-            />}
-          </div>
-        ),
-      },
-    ],
-    []
-  );
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: orders });
+     
+      cellRenderer: StatusCellRenderer, // Use the React component directly
+
+    },
+    {
+      headerName: "Sales Executive",
+      field: "salesExecutive",
+    },
+    {
+      headerName: "Actions",
+      minWidth: 100,
+      cellRenderer: ActionButtonRenderer,
+      
+    },
+  ];
+
+  //boc my mahendra
+  const defaultColDef = {
+    flex: 1,
+  };
+
+  const gridOptions = {
+    enableBrowserTooltips: true, // Enable browser tooltips globally
+    tooltipShowDelay: 500, // Set a delay for the tooltip
+  };
+  //eoc by mahendra
+  // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+  //   useTable({ columns, data: orders });
   return (
     <div className="m-4">
       <div
@@ -229,11 +320,16 @@ const Production = () => {
         }}
       >
         <Breadcrumb>
-          <Breadcrumb.Item onClick={goToDashboard} style={{ cursor: 'pointer' }}>Home</Breadcrumb.Item>
+          <Breadcrumb.Item
+            onClick={goToDashboard}
+            style={{ cursor: "pointer" }}
+          >
+            Home
+          </Breadcrumb.Item>
           <Breadcrumb.Item active>Production</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <div className="table-scrollable">
+      {/* <div className="table-scrollable">
         <Table {...getTableProps()} striped bordered hover>
           <thead>
             {headerGroups?.map((headerGroup, i) => (
@@ -268,7 +364,22 @@ const Production = () => {
             })}
           </tbody>
         </Table>
+      </div> */}
+      <div
+        className={"ag-theme-quartz"}
+        style={{ width: "100%", height: "calc(100vh - 100px)"  
+         }}
+      >
+        <AgGridReact
+          rowData={rows}
+          pagination={true}
+          gridOptions={gridOptions}
+          columnDefs={columns}
+          defaultColDef={defaultColDef}
+          domLayout="autoHeight" // Adjusts height dynamically
+        />
       </div>
+
       <StartProduction
         show={show}
         setShow={setShow}

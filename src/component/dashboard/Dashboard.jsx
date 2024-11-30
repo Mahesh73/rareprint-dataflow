@@ -16,30 +16,33 @@ import ViewProduct from "./ViewProduct";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { confirmationDialog } from "../../common/ConfirmationDialog";
+import { AgGridReact } from "ag-grid-react";
 
-const GlobalFilter = ({ filter, setFilter }) => {
-  return (
-    <span>
-      <input
-        value={filter || ""}
-        onChange={(e) => setFilter(e.target.value || undefined)}
-        placeholder="Search orders..."
-        className="search-input"
-      />
-    </span>
-  );
-};
+// const GlobalFilter = ({ filter, setFilter }) => {
+//   return (
+//     <span>
+//       <input
+//         value={filter || ""}
+//         onChange={(e) => setFilter(e.target.value || undefined)}
+//         placeholder="Search orders..."
+//         className="search-input"
+//       />
+//     </span>
+//   );
+// };
 
 const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showDetails, setShowDetails] = useState([]);
+  const [rows, setRows] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
       const response = await axiosInstance.get("/api/orders");
       setOrders(response.data);
+      setRows(response.data);
     };
     fetchOrders();
   }, []);
@@ -70,6 +73,7 @@ const Dashboard = () => {
 
   const renderTooltip = (props, value, courierCharges) => {
     const advance = JSON.parse(value);
+    console.log(advance);
     return (
       <Tooltip id="cell-tooltip" {...props}>
         <span>Amount - {advance.advanceAmount}</span>
@@ -84,6 +88,7 @@ const Dashboard = () => {
   };
 
   const handleShowModal = (product) => {
+    console.log(product);
     setShowDetails(product);
     setShowModal(true);
   };
@@ -92,106 +97,92 @@ const Dashboard = () => {
     navigate("/order", { state: { rowData: row, edit: true } });
   };
 
-  // Define columns for the table
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Customer Name",
-        accessor: "customerName",
-      },
-      {
-        Header: "Customer No",
-        accessor: "customerNo",
-      },
-      {
-        Header: "Customer Add",
-        accessor: "customerAdd",
-      },
-      {
-        Header: "Invoice No",
-        accessor: "invoiceNo",
-      },
-      {
-        Header: "Date",
-        accessor: "date",
-        Cell: ({ value }) => new Date(value).toLocaleDateString(),
-      },
-      {
-        Header: "Order Age",
-        accessor: "age",
-      },
-      {
-        Header: "Updated Date",
-        accessor: "updatedAt",
-        Cell: ({ value }) => new Date(value).toLocaleDateString(),
-      },
-      {
-        Header: "Sales Executive",
-        accessor: "salesExecutive",
-      },
-      {
-        Header: "Payment Method",
-        accessor: "paymentMethod",
-        Cell: ({ row }) => {
-          return row.original.paymentMethod === "Advance" ? (
-            <OverlayTrigger
-              placement="bottom"
-              delay={{ show: 250, hide: 400 }}
-              overlay={(props) =>
-                renderTooltip(
-                  props,
-                  row.original.advance,
-                  row.original.courierCharges
-                )
-              }
-            >
-              <span>{row.original.paymentMethod}</span>
-            </OverlayTrigger>
-          ) : (
-            <OverlayTrigger
-              placement="bottom"
-              overlay={
-                <Tooltip>
-                  Courier Charges - {row.original.courierCharges}
-                </Tooltip>
-              }
-            >
-              <span>{row.original.paymentMethod}</span>
-            </OverlayTrigger>
-          );
-        },
-      },
-      {
-        Header: "Actions",
-        minWidth: 100,
-        Cell: ({ row }) => (
-          <div style={{ cursor: "pointer" }}>
-            {row.original.product?.length && <EyeFill
-              onClick={() => handleShowModal(row.original.product)}
-              className="mx-2"
-            />}
-            <PencilSquare
-              onClick={() => editProduct(row.original)}
-              className="mx-2"
-            />
-            <TrashFill onClick={() => deleteCell(row.original._id)} />
-          </div>
-        ),
-      },
-    ],
-    []
-  );
+  const ActionButtonRenderer = (props) => {
+    return (
+      <div>
+        {" "}
+        <EyeFill
+          onClick={() => handleShowModal(props.data.product)}
+          className="mx-2"
+        />
+        <PencilSquare
+          onClick={() => editProduct(props.data)}
+          className="mx-2"
+        />
+        <TrashFill onClick={() => deleteCell(props.data._id)} />
+      </div>
+    );
+  };
 
-  // Create a table instance
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    setGlobalFilter,
-    state: { globalFilter },
-  } = useTable({ columns, data: orders }, useGlobalFilter, useSortBy);
+  // Define columns for the table
+  const columns = [
+    {
+      headerName: "Customer Name",
+      field: "customerName",
+    },
+    {
+      headerName: "Customer No",
+      field: "customerNo",
+    },
+    {
+      headerName: "Customer Add",
+      field: "customerAdd",
+    },
+    {
+      headerName: "Invoice No",
+      field: "invoiceNo",
+    },
+    {
+      headerName: "Date",
+      field: "date",
+      valueFormatter: ({ value }) => new Date(value).toLocaleDateString(),
+    },
+    {
+      headerName: "Order Age",
+      field: "age",
+    },
+    {
+      headerName: "Updated Date",
+      field: "updatedAt",
+      valueFormatter: ({ value }) => new Date(value).toLocaleDateString(),
+    },
+    {
+      headerName: "Sales Executive",
+      field: "salesExecutive",
+    },
+    {
+      headerName: "Payment Method",
+      field: "paymentMethod",
+      tooltipValueGetter: (params) => {
+        const advance = JSON.parse(params.data.advance);
+        const couriercharges = params.data.courierCharges;
+        // Use HTML <br /> for line breaks
+        if (params.data.paymentMethod == "Advance") {
+          return `Amount: ${advance.advanceAmount}\nDate: ${advance.advanceDate}\nType: ${advance.advanceType}\nCourier-Charges: ${couriercharges}`;
+        }else {
+          return'';
+        }
+      },
+      // Enable the `tooltipComponentParams` to allow HTML rendering in the tooltip
+      tooltipComponentParams: {
+        html: true, // Allow HTML in tooltip text
+      },
+    },
+    {
+      headerName: "Actions",
+      minWidth: 100,
+      cellRenderer: ActionButtonRenderer,
+    },
+  ];
+
+  const defaultColDef = {
+    flex: 1,
+  };
+
+  const gridOptions = {
+    enableBrowserTooltips: true, // Enable browser tooltips globally
+    tooltipShowDelay: 500, // Set a delay for the tooltip
+  };
 
   return (
     <Container>
@@ -208,18 +199,35 @@ const Dashboard = () => {
           <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
         </Breadcrumb>
         <div className="search-bar">
-          <GlobalFilter
+          {/* <GlobalFilter
             filter={globalFilter}
             setFilter={setGlobalFilter}
             className="mt-3"
-          />
+          /> */}
           <Button onClick={() => navigate("/order")}>Create Order</Button>
         </div>
       </div>
-      <div className="table-scrollable">
+
+      {/* <!--ag grid --! */}
+
+      <div
+        className={"ag-theme-quartz"}
+        style={{ width: "100%",   height: "calc(100vh - 100px)", }}
+      >
+        <AgGridReact
+          rowData={rows}
+          pagination={true}
+          gridOptions={gridOptions}
+          columnDefs={columns}
+          defaultColDef={defaultColDef}
+          domLayout="autoHeight" // Adjusts height dynamically
+        />
+      </div>
+
+      {/* <div className="table-scrollable">
         <Table {...getTableProps()} striped bordered hover className="table">
           <thead style={{ position: "sticky", top: 0 }}>
-            {headerGroups.map((headerGroup, i) => (
+            {headerNameGroups.map((headerGroup, i) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={i}>
                 {headerGroup.headers.map((column, _i) => (
                   <th
@@ -255,7 +263,7 @@ const Dashboard = () => {
             })}
           </tbody>
         </Table>
-      </div>
+      </div> */}
       {showModal && (
         <ViewProduct
           showModal={showModal}
