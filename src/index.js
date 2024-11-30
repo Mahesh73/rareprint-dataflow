@@ -7,6 +7,8 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import routes from './routes';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import 'ag-grid-community/styles/ag-grid.css';
+import "ag-grid-community/styles/ag-theme-quartz.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
