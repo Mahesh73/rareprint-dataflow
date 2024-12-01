@@ -5,11 +5,11 @@
   display: none; /* Hide by default */
 }
 
-.button-dispatch {
-  min-width: 80px; /* Set a minimum width for the button */
-  padding: 5px; /* Add padding for better click area */
-  font-size: 14px; /* Set a larger font size */
-}
+/* .button-dispatch {
+  min-width: 80px; 
+  padding: 5px; 
+  font-size: 14px; 
+} */
 
 @media print {
   table {

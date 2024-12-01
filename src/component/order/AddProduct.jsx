@@ -1,6 +1,5 @@
 import React, { useState , useEffect } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
 
 const AddProduct = ({
   setShowModal,
@@ -11,31 +10,28 @@ const AddProduct = ({
   products,
   setProducts,
   edit,
+  handleCloseModal
 }) => {
   const [modelData, setModelData] = useState({
     quantity: edit ? products[productDetail.index].quantity : 0,
     amount: edit ? products[productDetail.index].amount : 0,
-    // design: null,
-    design: edit ? products[productDetail.index].design : null, // Store the file or null for new product
+    design: edit ? products[productDetail.index].design : null, 
     productDescription: edit
       ? products[productDetail.index].productDescription
       : "",
   });
 
-  // BOC by mahendra 
   useEffect(() => {
     if (edit) {
       setModelData({
         quantity: products[productDetail.index].quantity,
         amount: products[productDetail.index].amount,
-        design: products[productDetail.index].design, // This will keep the previously attached design
+        design: products[productDetail.index].design, 
         productDescription: products[productDetail.index].productDescription,
       });
     }
   }, [edit, productDetail.index, products]);
-  // EOC by mahendra
 
-  const handleCloseModal = () => setShowModal(false);
   const handleAddProduct = () => {
     if (modelData.quantity && modelData.amount) {
       const newProduct = {
@@ -63,7 +59,6 @@ const AddProduct = ({
       modelData.productDescription;
     setProducts(products);
     setShowModal(false);
-    console.log(products);
   };
   const handleProductDetails = (e) => {
     const { name, value } = e.target;
@@ -127,6 +122,7 @@ const AddProduct = ({
                 type="file"
                 name="design"
                 onChange={handleFileChange}
+                accept="image/jpeg, image/png, image/webp, image/svg"
               />
               {modelData.design && (
                 <small className="d-block mt-2">
@@ -154,7 +150,7 @@ const AddProduct = ({
         <Button
           variant="secondary"
           type="submit"
-          onClick={() => setShowModal(false)}
+          onClick={handleCloseModal}
         >
           Close
         </Button>

@@ -144,8 +144,17 @@ const Order = () => {
     setEdit(false);
     setShowModal(true);
   };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setFormData({
+      ...formData,
+      product: "",
+      category: "",
+      code: "",
+    });
+  }
   const handleProductData = (data) => {
-    console.log(data);
     data.code = formData.category;
     setProducts([data, ...products]);
     setFormData({
@@ -393,6 +402,7 @@ const Order = () => {
               products={products}
               setProducts={setProducts}
               edit={edit}
+              handleCloseModal={handleCloseModal}
             />
           )}
         </Row>

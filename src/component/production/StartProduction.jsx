@@ -25,10 +25,10 @@ const StartProduction = ({
       key: "outsource",
       value: "Outsource",
     },
-    {
-      key: "sheetProduction",
-      value: "Sheet Production",
-    },
+    // {
+    //   key: "sheetProduction",
+    //   value: "Sheet Production",
+    // },
   ];
   const [type, setType] = useState("inHouse");
   const [formData, setFormData] = useState({
