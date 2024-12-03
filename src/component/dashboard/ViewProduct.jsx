@@ -1,6 +1,6 @@
 import moment from "moment";
 import React from "react";
-import { Modal, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
+import { Modal, OverlayTrigger, Table, Tooltip , Image } from "react-bootstrap";
 import { InfoCircleFill } from "react-bootstrap-icons";
 const ViewProduct = ({ showModal, setShowModal, details }) => {
   const renderTooltip = (props, value) => {
@@ -17,6 +17,16 @@ const ViewProduct = ({ showModal, setShowModal, details }) => {
       </Tooltip>
     );
   };
+
+   // Function to normalize image URL
+   const getImageUrl = (design) => {
+    // If design is a full URL, return it directly
+    if (design.startsWith('http')) return design;
+    
+    // Otherwise, prepend the base URL
+    return `http://localhost:5000/uploads/${design}`;
+  };
+
   return (
     <Modal
       show={showModal}
@@ -40,11 +50,12 @@ const ViewProduct = ({ showModal, setShowModal, details }) => {
                 <th>Amount</th>
                 <th>Description</th>
                 <th>Created Date</th>
+                <th>Design</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {details?.map((item, index) => {
+              {details?.map((item, index , design) => {
                 return (
                   <tr key={index}>
                     <td>{item.productName}</td>
@@ -55,6 +66,23 @@ const ViewProduct = ({ showModal, setShowModal, details }) => {
                     <td>{item.amount}</td>
                     <td>{item.productDescription}</td>
                     <td>{moment(item.createdAt).format("DD-MM-YYYY")}</td>
+                    <td>
+                    {item.design ? (
+                        <Image
+                          src={getImageUrl(item.design)}
+                          thumbnail
+                          style={{
+                            maxWidth: '100px',
+                            maxHeight: '100px',
+                            objectFit: 'cover',
+                            cursor: 'pointer'
+                          }}
+                          // onClick={() => window.open(getImageUrl(item.design), '_blank')}
+                        />
+                      ) : (
+                        'No Design'
+                      )}
+                    </td>
                     <td>
                       {item.status[item.status.length - 1].status}
                       <OverlayTrigger
