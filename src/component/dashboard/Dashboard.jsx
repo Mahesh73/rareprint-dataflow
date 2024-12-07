@@ -101,8 +101,29 @@ const Dashboard = () => {
       headerName: "Date",
       field: "date",
       minWidth: 125,
-      filter: "agDateColumnFilter",
-      valueFormatter: ({ value }) => new Date(value).toLocaleDateString(),
+      filter: 'agDateColumnFilter',
+      filterParams: {
+        comparator: (filterLocalDateAtMidnight, cellValue) => {
+          // Ensure consistent date parsing
+          const cellDate = cellValue ? new Date(cellValue) : null;
+          
+          if (!cellDate) return -1;
+          
+          // Reset both dates to midnight for accurate comparison
+          const filterDate = new Date(filterLocalDateAtMidnight);
+          filterDate.setHours(0, 0, 0, 0);
+          cellDate.setHours(0, 0, 0, 0);
+          
+          if (cellDate < filterDate) return -1;
+          if (cellDate > filterDate) return 1;
+          return 0;
+        },
+        browserDatePicker: true,
+        // Optional: specify input date format if needed
+        inRangeFloatingFilterDateFormat: 'yyyy-MM-dd'
+      },
+      // Keep the original valueFormatter if you want to display dates in a specific format
+      valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
     },
     {
       headerName: "Order Age",
@@ -113,7 +134,29 @@ const Dashboard = () => {
       headerName: "Updated Date",
       field: "updatedAt",
       minWidth: 140,
-      valueFormatter: ({ value }) => new Date(value).toLocaleDateString(),
+      filter: 'agDateColumnFilter',
+      filterParams: {
+        comparator: (filterLocalDateAtMidnight, cellValue) => {
+          // Ensure consistent date parsing
+          const cellDate = cellValue ? new Date(cellValue) : null;
+          
+          if (!cellDate) return -1;
+          
+          // Reset both dates to midnight for accurate comparison
+          const filterDate = new Date(filterLocalDateAtMidnight);
+          filterDate.setHours(0, 0, 0, 0);
+          cellDate.setHours(0, 0, 0, 0);
+          
+          if (cellDate < filterDate) return -1;
+          if (cellDate > filterDate) return 1;
+          return 0;
+        },
+        browserDatePicker: true,
+        // Optional: specify input date format if needed
+        inRangeFloatingFilterDateFormat: 'yyyy-MM-dd'
+      },
+      // Keep the original valueFormatter if you want to display dates in a specific format
+      valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
     },
     {
       headerName: "Sales Executive",
@@ -152,6 +195,9 @@ const Dashboard = () => {
   const defaultColDef = {
     flex: 1,
     filter: true,
+    filterParams: {
+      buttons: ['reset', 'apply'] // This adds clear/reset functionality to all filters
+    }
   };
 
   const gridOptions = {

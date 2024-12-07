@@ -163,22 +163,27 @@ const Production = () => {
     {
       headerName: "Invoice No",
       field: "invoiceNo",
+      minWidth: 155
     },
     {
       headerName: "Customer Name",
       field: "customerName",
+      minWidth: 155
     },
     {
       headerName: "Product Name",
       field: "productName",
+      minWidth: 155
     },
     {
       headerName: "Product Category",
       field: "productCategory",
+      minWidth: 155
     },
     {
       headerName: "Production Type",
       field: "chooseType",
+      minWidth: 155,
       tooltipValueGetter: (params) => {
         if (params.data && params.data.production) {
           const { chooseType, selectMachine } = params.data.production;
@@ -213,54 +218,59 @@ const Production = () => {
         }
        
       },
-    
-      // Cell: ({ row }) => {
-      //   return (
-      //     row.original.production &&
-      //     (row.original.production?.chooseType === "outsource" ? (
-      //       "OutSource"
-      //     ) : row.original.production?.chooseType === "inHouse" ? (
-      //       row.original.production.selectMachine ? (
-      //         <OverlayTrigger
-      //           placement="bottom"
-      //           overlay={
-      //             <Tooltip>
-      //               {row.original.production.selectMachine.toUpperCase()}
-      //             </Tooltip>
-      //           }
-      //         >
-      //           <span>InHouse</span>
-      //         </OverlayTrigger>
-      //       ) : (
-      //         "InHouse"
-      //       )
-      //     ) : (
-      //       "Sheet Production"
-      //     ))
-      //   );
-      // },
+
     },
     {
       headerName: "Size",
       field: "size",
+      minWidth: 100
     },
     {
       headerName: "QTY",
       field: "qty",
+      minWidth: 80
     },
     {
       headerName: "GSM",
       field: "gsm",
+      minWidth: 80
     },
     {
       headerName: "Amount",
       field: "amount",
+      minWidth: 100
     },
     {
       headerName: "Due Date",
-      field: "dueDate",
+      field: "production.dueDate", // Note the nested field path
       minWidth: 100,
-      cellRenderer: DueDateRenderer, // Use the React component directly
+      filter: 'agDateColumnFilter',
+      filterParams: {
+        comparator: (filterLocalDateAtMidnight, cellValue) => {
+          // Ensure consistent date parsing
+          const cellDate = cellValue ? new Date(cellValue) : null;
+          
+          if (!cellDate) return -1;
+          
+          // Reset both dates to midnight for accurate comparison
+          const filterDate = new Date(filterLocalDateAtMidnight);
+          filterDate.setHours(0, 0, 0, 0);
+          cellDate.setHours(0, 0, 0, 0);
+          
+          if (cellDate < filterDate) return -1;
+          if (cellDate > filterDate) return 1;
+          return 0;
+        },
+        browserDatePicker: true,
+        inRangeFloatingFilterDateFormat: 'yyyy-MM-dd'
+      },
+      // Keep the existing cell renderer for color-coding
+      cellRenderer: DueDateRenderer,
+      valueGetter: (params) => {
+        // Ensure we can retrieve the date even with nested structure
+        return params.data.production?.dueDate;
+      },
+      valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
     },
     {
       headerName: "Status",
@@ -289,10 +299,17 @@ const Production = () => {
     {
       headerName: "Sales Executive",
       field: "salesExecutive",
+      minWidth: 155
     },
     {
       headerName: "Actions",
-      minWidth: 100,
+      minWidth: 40,
+      maxWidth:100,
+      pinned: "right",
+      field: "action",
+      filter: false,
+      sortable: false,
+      resizable: false,
       cellRenderer: ActionButtonRenderer,
       
     },
@@ -301,6 +318,10 @@ const Production = () => {
   //boc my mahendra
   const defaultColDef = {
     flex: 1,
+    filter: true,
+    filterParams: {
+      buttons: ['reset', 'apply'] // This adds clear/reset functionality to all filters
+    }
   };
 
   const gridOptions = {
@@ -367,8 +388,7 @@ const Production = () => {
       </div> */}
       <div
         className={"ag-theme-quartz"}
-        style={{ width: "100%", height: "calc(100vh - 100px)"  
-         }}
+        style={{ width: "100%", height: "calc(100vh - 100px)" }}
       >
         <AgGridReact
           rowData={rows}
@@ -376,7 +396,7 @@ const Production = () => {
           gridOptions={gridOptions}
           columnDefs={columns}
           defaultColDef={defaultColDef}
-          domLayout="autoHeight" // Adjusts height dynamically
+          domLayout="normal"  // Adjusts height dynamically
         />
       </div>
 

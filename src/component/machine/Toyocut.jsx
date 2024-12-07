@@ -1,11 +1,16 @@
-import React from "react";
-import { Button, Table } from "react-bootstrap";
-import { PrinterFill, TrashFill } from "react-bootstrap-icons";
+import React, { useState } from "react";
+import { PrinterFill, TrashFill, Truck } from "react-bootstrap-icons";
+import { Button } from "react-bootstrap";
 import { confirmationDialog } from "../../common/ConfirmationDialog";
 import axiosInstance from "../../axiosConfig";
 import { toast } from "react-toastify";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 const Toyocut = ({ data, setData }) => {
+  const [gridApi, setGridApi] = useState(null);
+
   const deleteProduction = async (id) => {
     const isConfirmed = await confirmationDialog({
       title: "Delete Order",
@@ -25,6 +30,7 @@ const Toyocut = ({ data, setData }) => {
         });
     }
   };
+
   const printingCompleted = async (item) => {
     const isConfirmed = await confirmationDialog({
       title: "Order Completed",
@@ -43,59 +49,80 @@ const Toyocut = ({ data, setData }) => {
         });
     }
   };
-  const startPrinting = () => {};
+
+  const startPrinting = () => {
+    // Logic for starting printing (not implemented in the original code)
+  };
+
+  const columnDefs = [
+    { headerName: "Invoice No", field: "orderId.invoiceNo", sortable: true, filter: true },
+    { headerName: "Customer Name", field: "orderId.customerName", sortable: true, filter: true },
+    { headerName: "Product Name", field: "productName", sortable: true, filter: true },
+    { headerName: "Product Category", field: "category", sortable: true, filter: true },
+    { headerName: "Size", field: "size", sortable: true, filter: true },
+    { headerName: "GSM", field: "gsm", sortable: true, filter: true },
+    { headerName: "Qty", field: "quantity", sortable: true, filter: true },
+    { headerName: "Prod Qty", field: "prodQty", sortable: true, filter: true },
+    {
+      headerName: "Action",
+      pinned: "right",
+      field: "action",
+      filter: false,
+      sortable: false,
+      resizable: false,
+      cellRenderer: (params) => {
+        const item = params.data;
+        return (
+          <div  style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%", // Ensure it spans the full cell height
+          }}>
+            <PrinterFill
+              title="Start Printing"
+              style={{marginRight: "10px", cursor: "pointer" }}
+              onClick={() => startPrinting(item._id)}
+            />
+            <TrashFill
+              style={{marginRight: "10px", cursor: "pointer" }}
+              onClick={() => deleteProduction(item._id)}
+            />
+            <Truck
+              variant="primary"
+              style={{marginRight: "10px", cursor: "pointer" }}
+              onClick={() => console.log("Dispatch clicked")}
+            />
+             
+            {item.afterPrint && (
+              <Button size="sm" onClick={() => printingCompleted(item)}>
+                Printing Completed
+              </Button>
+            )}
+          </div>
+        );
+      },
+      minWidth: 300,
+    },
+  ];
+
+  const defaultColDef = {
+    flex: 1,
+    minWidth: 150,
+    filter: true,
+  };
+
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Invoice No</th>
-          <th>Customer Name</th>
-          <th>Product Name</th>
-          <th>Product Category</th>
-          <th>Size</th>
-          <th>GSM</th>
-          <th>Qty</th>
-          <th>Prod Qty</th>
-          <th style={{ minWidth: "125px" }}>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data?.map((item, index) => {
-          return (
-            <tr key={index}>
-              <td>{item.orderId?.invoiceNo}</td>
-              <td>{item.orderId?.customerName}</td>
-              <td>{item.productName}</td>
-              <td>{item.category}</td>
-              <td>{item.size}</td>
-              <td>{item.gsm}</td>
-              <td>{item.quantity}</td>
-              <td>{item.prodQty}</td>
-              <td style={{ cursor: "pointer" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <PrinterFill
-                  title="Start Printing"
-                  style={{ marginRight: '10px' }}
-                  onClick={() => startPrinting(item._id)}
-                />
-                <TrashFill
-                  className="mx-2"
-                  style={{ marginRight: '10px' }}
-                  onClick={() => deleteProduction(item._id)}
-                />
-                <Button variant="primary"  style={{ marginRight: '10px' }} className="mx-2 button-dispatch"> Dispatch</Button>
-                {item.afterPrint && (
-                  <Button size="sm" onClick={() => printingCompleted(item)}>
-                    Printing Completed
-                  </Button>
-                )}
-                </div>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
+    <div className={"ag-theme-quartz"} style={{ height: 500, width: "100%" }}>
+      <AgGridReact
+        rowData={data}
+        columnDefs={columnDefs}
+        domLayout="autoHeight"
+        defaultColDef={defaultColDef}
+        pagination={true}
+        onGridReady={(params) => setGridApi(params.api)}
+      />
+    </div>
   );
 };
 
