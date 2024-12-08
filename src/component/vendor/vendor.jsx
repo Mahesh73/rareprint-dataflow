@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useTable, useGlobalFilter } from "react-table";
+import React, { useEffect, useState } from "react";
+import { useTable } from "react-table";
 import {
   Table,
   Container,
@@ -13,8 +13,14 @@ import {
 } from "react-bootstrap";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../axiosConfig";
 
 const Vendor = () => {
+  useEffect(() => {
+    axiosInstance.get("/api/outsource").then(res => {
+      console.log(res);
+  })
+  }, [])
   const [data, setData] = useState([]);
   const initialVendorState = {
     vendorName: "",

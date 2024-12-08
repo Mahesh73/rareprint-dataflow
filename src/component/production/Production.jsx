@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
-import { useTable } from "react-table";
+import { Breadcrumb, Tooltip } from "react-bootstrap";
 import { GearFill, InfoCircleFill, TrashFill } from "react-bootstrap-icons";
 import { PencilSquare } from "react-bootstrap-icons";
 import axiosInstance from "../../axiosConfig";
@@ -74,7 +73,7 @@ const Production = () => {
 
   const ActionButtonRenderer = (props) => {
     return (
-      <div>
+      <div style={{cursor: 'pointer'}}>
         {!props.data?.production && (
           <GearFill
             onClick={() => handleShow(props.data)}

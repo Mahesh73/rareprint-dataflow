@@ -102,13 +102,14 @@ const StartProduction = ({
   };
   const submitOutSource = (_formData) => {
     axiosInstance
-      .put(`/api/orders/${orderId}/products/${productId}/production`, _formData)
+      .post(`/api/orders/${orderId}/products/${productId}/production`, _formData)
       .then((res) => {
         toast.success(res.data.message);
         setShow(false);
-        navigate("/machine");
+        // navigate("/machine");
       })
       .catch((err) => {
+        console.log(err);
         toast.error(err.response.data.error);
       });
   };
@@ -121,7 +122,6 @@ const StartProduction = ({
     } else if (type === "outsource") {
       submitOutSource(formData);
     }
-    
   };
   useEffect(() => {
     if (productionData) {
@@ -196,17 +196,30 @@ const StartProduction = ({
             <Outsource formData={formData} setFormData={setFormData} />
           )}
           {type === "sheetProduction" && (
-            <SheetProduction formData={formData} setFormData={setFormData}  setIsSheetFieldsFilled={setIsSheetFieldsFilled} />
+            <SheetProduction
+              formData={formData}
+              setFormData={setFormData}
+              setIsSheetFieldsFilled={setIsSheetFieldsFilled}
+            />
           )}
-          <Button variant="primary" type="submit" className="mt-5" 
-          disabled={
-             (type === "sheetProduction" &&
-              !isSheetFieldsFilled &&
-              !productionData // Disable only for "Start Production" (if no fields filled)
-              ) || (type === "inHouse" && (formData.selectMachine !== "riso" && formData.selectMachine !== "xerox") && !productionData) ||
-              (type === "outsource" && (formData.selectVendor == "" || formData.selectVendor == "Select Vendor")&& !productionData)
+          <Button
+            variant="primary"
+            type="submit"
+            className="mt-5"
+            disabled={
+              (type === "sheetProduction" &&
+                !isSheetFieldsFilled &&
+                !productionData) || // Disable only for "Start Production" (if no fields filled)
+              (type === "inHouse" &&
+                formData.selectMachine !== "riso" &&
+                formData.selectMachine !== "xerox" &&
+                !productionData) ||
+              (type === "outsource" &&
+                (formData.selectVendor == "" ||
+                  formData.selectVendor == "Select Vendor") &&
+                !productionData)
             }
-            >
+          >
             {productionData ? "Update Production" : "Start Production"}
           </Button>
         </Form>

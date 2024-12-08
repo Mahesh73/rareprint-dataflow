@@ -2,55 +2,57 @@ import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
 const Outsource = ({ formData, setFormData }) => {
-  const vendorList = [{
-    name: 'SOFTLINK DIGITAL',
-    city: 'NAGPUR'
-  }, 
-{
-  name: 'FRIENDS CARD',
-  city: 'NAGPUR'
-},
-{
-  name: 'SRM ADVERTISEMENT',
-  city: 'NAGPUR'
-},
-{
-  name: 'SANGAM NOVELTIES',
-  city: 'DELHI'
-},
-{
-  name: 'JINDAL NOVELTIES',
-  city: 'DELHI'
-},
-{
-  name: 'SN PRINTERS',
-  city: 'CHANDRAPUR'
-},
-{
-  name: 'JANKI ENTERPRISES',
-  city: 'NAGPUR'
-},
-{
-  name: 'JAVED PRINTERS',
-  city: 'NAGPUR'
-},
-{
-  name: 'MOHURLE PRINTERS',
-  city: 'CHANDRAPUR'
-}];
+  const vendorList = [
+    {
+      name: "SOFTLINK DIGITAL",
+      city: "NAGPUR",
+    },
+    {
+      name: "FRIENDS CARD",
+      city: "NAGPUR",
+    },
+    {
+      name: "SRM ADVERTISEMENT",
+      city: "NAGPUR",
+    },
+    {
+      name: "SANGAM NOVELTIES",
+      city: "DELHI",
+    },
+    {
+      name: "JINDAL NOVELTIES",
+      city: "DELHI",
+    },
+    {
+      name: "SN PRINTERS",
+      city: "CHANDRAPUR",
+    },
+    {
+      name: "JANKI ENTERPRISES",
+      city: "NAGPUR",
+    },
+    {
+      name: "JAVED PRINTERS",
+      city: "NAGPUR",
+    },
+    {
+      name: "MOHURLE PRINTERS",
+      city: "CHANDRAPUR",
+    },
+  ];
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    if(name === 'selectVendor'){
+      setFormData({
+        ...formData,
+        selectVendor: value,
+      })
+    }
   };
-  //   const handleFileChange = (e) => {
-  //     setFormData({
-  //       ...formData,
-  //       file: e.target.files[0],
-  //     });
-  //   };
   return (
     <>
       <Row>
@@ -67,7 +69,7 @@ const Outsource = ({ formData, setFormData }) => {
               <option>Select Vendor</option>
               {vendorList.map((item, i) => {
                 return (
-                  <option value={item} key={i}>
+                  <option value={item.name} key={i}>
                     {item.name} {item.city}
                   </option>
                 );
