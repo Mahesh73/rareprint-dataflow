@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { PrinterFill, TrashFill, Truck } from "react-bootstrap-icons";
-import { Button } from "react-bootstrap";
+import {
+  PrinterFill,
+  TrashFill,
+  Truck,
+  UsbMiniFill,
+} from "react-bootstrap-icons";
 import { confirmationDialog } from "../../common/ConfirmationDialog";
 import axiosInstance from "../../axiosConfig";
 import { toast } from "react-toastify";
 import { AgGridReact } from "ag-grid-react";
-
+import Swal from "sweetalert2";
 
 const Xerox = ({ data, setData }) => {
   const [gridApi, setGridApi] = useState(null);
@@ -30,34 +34,53 @@ const Xerox = ({ data, setData }) => {
     }
   };
 
-  const printingCompleted = async (item) => {
-    const isConfirmed = await confirmationDialog({
-      title: "Order Completed",
-      text: "Are you sure you want to complete printing for this order?",
-      confirmButtonText: "Yes",
-      cancelButtonText: "Cancel",
-    });
-    if (isConfirmed) {
-      axiosInstance
-        .post("/api/toyocut", item)
-        .then((res) => {
-          toast.success(res.data.message);
-        })
-        .catch((res) => {
-          toast.error(res.data.message);
-        });
-    }
-  };
-
   const startPrinting = () => {
     // Logic for starting printing (not implemented in the original code)
   };
 
+  const moveToToyocut = (item) => {
+    Swal.fire({
+      title: "Do you want to move to Toyocut this order?",
+      showCancelButton: true,
+      confirmButtonText: "Save",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosInstance
+          .post("/api/toyocut", item)
+          .then((res) => {
+            toast.success(res.data.message);
+            setData((prev) => prev.filter((val) => val._id !== item._id));
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    });
+  };
+
   const columnDefs = [
-    { headerName: "Invoice No", field: "orderId.invoiceNo", sortable: true, filter: true },
-    { headerName: "Customer Name", field: "orderId.customerName", sortable: true, filter: true },
-    { headerName: "Product Name", field: "productName", sortable: true, filter: true },
-    { headerName: "Product Category", field: "category", sortable: true, filter: true },
+    {
+      headerName: "Invoice No",
+      field: "orderId.invoiceNo",
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: "Customer Name",
+      field: "orderId.customerName",
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: "Product Name",
+      field: "productName",
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: "Product Category",
+      field: "category",
+      sortable: true,
+      filter: true,
+    },
     { headerName: "Size", field: "size", sortable: true, filter: true },
     { headerName: "GSM", field: "gsm", sortable: true, filter: true },
     { headerName: "Qty", field: "quantity", sortable: true, filter: true },
@@ -71,33 +94,33 @@ const Xerox = ({ data, setData }) => {
       resizable: false,
       cellRenderer: (params) => {
         const item = params.data;
+        console.log(item);
         return (
-          <div  style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%", // Ensure it spans the full cell height
-          }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              cursor: "pointer",
+            }}
+          >
             <PrinterFill
               title="Start Printing"
-              style={{ marginRight: "10px", cursor: "pointer" }}
+              style={{ marginRight: "10px" }}
               onClick={() => startPrinting(item._id)}
             />
             <TrashFill
-              style={{ marginRight: "10px", cursor: "pointer" }}
+              className="mx-2"
               onClick={() => deleteProduction(item._id)}
             />
-            <Truck
-              variant="primary"
-              style={{ marginRight: "10px", cursor: "pointer" }}
-              onClick={() => console.log("Dispatch clicked")}
-            />
-              
-            {item.afterPrint && (
-              <Button size="sm" onClick={() => printingCompleted(item)}>
-                Printing Completed
-              </Button>
+            {item.afterPrint === "toyocut" && (
+              <UsbMiniFill
+                title="Move to Toyocut"
+                onClick={() => moveToToyocut(item)}
+              />
             )}
+            {item.afterPrint === "packaging" && <Truck variant="primary" />}
           </div>
         );
       },
@@ -113,12 +136,14 @@ const Xerox = ({ data, setData }) => {
   };
 
   return (
-    <div  className={"ag-theme-quartz"} style={{ width: "100%", height: "calc(100vh - 100px)" }}>
+    <div
+      className={"ag-theme-quartz"}
+      style={{ width: "100%", height: "75vh" }}
+    >
       <AgGridReact
         rowData={data}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
-        domLayout="autoHeight"
         pagination={true}
         onGridReady={(params) => setGridApi(params.api)}
       />

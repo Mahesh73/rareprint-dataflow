@@ -113,11 +113,10 @@ const Toyocut = ({ data, setData }) => {
   };
 
   return (
-    <div className={"ag-theme-quartz"} style={{ height: 500, width: "100%" }}>
+    <div className={"ag-theme-quartz"} style={{ width: "100%", height: "75vh" }}>
       <AgGridReact
         rowData={data}
         columnDefs={columnDefs}
-        domLayout="autoHeight"
         defaultColDef={defaultColDef}
         pagination={true}
         onGridReady={(params) => setGridApi(params.api)}

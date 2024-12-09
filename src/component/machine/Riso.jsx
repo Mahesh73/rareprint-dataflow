@@ -156,12 +156,11 @@ const Riso = ({ data, setData }) => {
 
   return (
     <Container>
-      <div className={"ag-theme-quartz"} style={{ width: "100%", height: "calc(100vh - 100px)" }}>
+      <div className={"ag-theme-quartz"} style={{ width: "100%", height: "75vh" }}>
         <AgGridReact
           rowData={data}
           columnDefs={columns}
           defaultColDef={defaultColDef}
-          domLayout="autoHeight"
           pagination={true}
         />
       </div>
