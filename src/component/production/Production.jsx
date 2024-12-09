@@ -387,7 +387,7 @@ const Production = () => {
       </div> */}
       <div
         className={"ag-theme-quartz"}
-        style={{ width: "100%", height: "calc(100vh - 100px)" }}
+        style={{ width: "100%", height: "80vh" }}
       >
         <AgGridReact
           rowData={rows}
