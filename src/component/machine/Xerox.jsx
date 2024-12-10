@@ -124,7 +124,7 @@ const Xerox = ({ data, setData }) => {
           </div>
         );
       },
-      minWidth: 300,
+      width: 100,
     },
   ];
 

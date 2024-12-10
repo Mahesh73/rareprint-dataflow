@@ -45,3 +45,13 @@ thead th {
   outline: none;
   border-color: #007bff; 
 }
+
+.wide-modal {
+  max-width: 80%; /* Adjust the width as needed */
+}
+
+@media (max-width: 768px) {
+  .wide-modal {
+    max-width: 100%; /* For smaller screens */
+  }
+}

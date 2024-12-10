@@ -40,7 +40,7 @@ const Dashboard = () => {
         );
         if (response.status === 200) {
           toast.success(response.data.message);
-          setOrders((prev) => prev.filter((item) => item._id !== id));
+          setRows((prev) => prev.filter((item) => item._id !== id));
         } else {
           toast.error(response.data.message);
         }
@@ -51,6 +51,8 @@ const Dashboard = () => {
   };
 
   const handleShowModal = (product) => {
+
+    console.log("Product data being passed to modal:", product); // Debug here
     setShowDetails(product);
     setShowModal(true);
   };
@@ -206,14 +208,15 @@ const Dashboard = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
+     
       <div
-        className="m-1"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+      className="m-1"
+       style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
       >
         <Breadcrumb>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -236,6 +239,8 @@ const Dashboard = () => {
           defaultColDef={defaultColDef}
         />
       </div>
+
+      
 
       {showModal && (
         <ViewProduct

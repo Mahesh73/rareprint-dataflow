@@ -159,7 +159,7 @@ const OutSource = () => {
       filter: false,
       sortable: false,
       resizable: false,
-      minWidth: 150,
+      width: 100,
       cellRenderer: ActionButtonRenderer,
     },
   ];
@@ -178,7 +178,7 @@ const OutSource = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
       <div className="m-4">
         <div
           style={{
@@ -205,7 +205,7 @@ const OutSource = () => {
             rowData={vendor}
             columnDefs={columns}
             defaultColDef={defaultColDef}
-            domLayout="autoHeight"
+           
             pagination={true}
           />
         </div>
