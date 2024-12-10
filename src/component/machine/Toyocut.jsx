@@ -66,6 +66,7 @@ const Toyocut = ({ data, setData }) => {
     {
       headerName: "Action",
       pinned: "right",
+      width: 100,
       field: "action",
       filter: false,
       sortable: false,
@@ -102,7 +103,7 @@ const Toyocut = ({ data, setData }) => {
           </div>
         );
       },
-      minWidth: 300,
+     
     },
   ];
 

@@ -136,11 +136,12 @@ const Riso = ({ data, setData }) => {
     {
       headerName: "Actions",
       field: "actions",
+      width: 100,
       pinned: "right",
       filter: false,
       sortable: false,
       resizable: false,
-      minWidth: 150,
+      // minWidth: 150,
       cellRenderer: ActionButtonRenderer,
     },
   ];
@@ -155,7 +156,7 @@ const Riso = ({ data, setData }) => {
 
 
   return (
-    <Container>
+    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
       <div className={"ag-theme-quartz"} style={{ width: "100%", height: "75vh" }}>
         <AgGridReact
           rowData={data}

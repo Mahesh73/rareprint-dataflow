@@ -117,6 +117,7 @@ const Order = () => {
     formData["paymentMethod"] = paymentMethod;
     formData["product"] = products;
     createOrder(formData);
+    console.log(formData);
   };
 
   const handleChange = (e) => {
@@ -287,6 +288,7 @@ const Order = () => {
                 value={formData.date}
                 onChange={handleChange}
                 required
+                max={new Date().toISOString().split('T')[0]}
               />
             </Form.Group>
           </Col>

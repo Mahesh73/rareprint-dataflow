@@ -19,7 +19,7 @@ const Machine = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
       <Tab.Container id="left-tabs-example" defaultActiveKey="riso">
         <Nav variant="pills" className="m-3" fill>
           <Nav.Item>
