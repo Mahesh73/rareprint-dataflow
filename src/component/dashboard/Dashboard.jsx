@@ -52,7 +52,6 @@ const Dashboard = () => {
 
   const handleShowModal = (product) => {
 
-    console.log("Product data being passed to modal:", product); // Debug here
     setShowDetails(product);
     setShowModal(true);
   };
@@ -82,22 +81,26 @@ const Dashboard = () => {
     {
       headerName: "Customer Name",
       field: "customerName",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Customer Name provided",
     },
     {
       headerName: "Customer No",
       field: "customerNo",
-      minWidth: 135
+      minWidth: 135,
+      tooltipValueGetter: (params) => params.value || "No Customer No provided",
     },
     {
       headerName: "Customer Address",
       field: "customerAdd",
-      minWidth: 165
+      minWidth: 165,
+      tooltipValueGetter: (params) => params.value || "No Address provided",
     },
     {
       headerName: "Invoice No",
       field: "invoiceNo",
-      minWidth: 120
+      minWidth: 120,
+      tooltipValueGetter: (params) => params.value || "No Invoice No provided",
     },
     {
       headerName: "Date",
@@ -126,11 +129,14 @@ const Dashboard = () => {
       },
       // Keep the original valueFormatter if you want to display dates in a specific format
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
+      tooltipValueGetter: (params) =>
+        params.value ? `Date: ${new Date(params.value).toLocaleDateString()}` : "No Date provided",
     },
     {
       headerName: "Order Age",
       field: "age",
       minWidth: 115,
+      tooltipValueGetter: (params) => `Order Age: ${params.value || "N/A"}`,
     },
     {
       headerName: "Updated Date",
@@ -159,11 +165,14 @@ const Dashboard = () => {
       },
       // Keep the original valueFormatter if you want to display dates in a specific format
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
+      tooltipValueGetter: (params) =>
+        params.value ? `Updated Date: ${new Date(params.value).toLocaleDateString()}` : "No Updated Date provided",
     },
     {
       headerName: "Sales Executive",
       field: "salesExecutive",
       minWidth: 145,
+      tooltipValueGetter: (params) => `Sales Executive: ${params.value || "N/A"}`,
     },
     {
       headerName: "Payment Method",

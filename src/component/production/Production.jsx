@@ -162,22 +162,26 @@ const Production = () => {
     {
       headerName: "Invoice No",
       field: "invoiceNo",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Invoice Number",
     },
     {
       headerName: "Customer Name",
       field: "customerName",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Customer Name",
     },
     {
       headerName: "Product Name",
       field: "productName",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Product Name",
     },
     {
       headerName: "Product Category",
       field: "productCategory",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Product Category",
     },
     {
       headerName: "Production Type",
@@ -222,22 +226,26 @@ const Production = () => {
     {
       headerName: "Size",
       field: "size",
-      minWidth: 100
+      minWidth: 100,
+      tooltipValueGetter: (params) => params.value || "No Size Specified",
     },
     {
       headerName: "QTY",
       field: "qty",
-      minWidth: 80
+      minWidth: 80,
+      tooltipValueGetter: (params) => params.value || "No Quantity Specified",
     },
     {
       headerName: "GSM",
       field: "gsm",
-      minWidth: 80
+      minWidth: 80,
+      tooltipValueGetter: (params) => params.value || "No GSM Specified",
     },
     {
       headerName: "Amount",
       field: "amount",
-      minWidth: 100
+      minWidth: 100,
+      tooltipValueGetter: (params) => params.value ? `Amount: ${params.value}` : "No Amount Specified",
     },
     {
       headerName: "Due Date",
@@ -298,7 +306,8 @@ const Production = () => {
     {
       headerName: "Sales Executive",
       field: "salesExecutive",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Sales Executive Assigned",
     },
     {
       headerName: "Actions",

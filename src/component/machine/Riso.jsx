@@ -98,13 +98,13 @@ const Riso = ({ data, setData }) => {
 
   // Column Definitions
   const columns = [
-    { headerName: "Invoice No", field: "orderId.invoiceNo", minWidth: 150 },
-    { headerName: "Customer Name", field: "orderId.customerName", minWidth: 150 },
-    { headerName: "Product Name", field: "productName", minWidth: 150 },
-    { headerName: "Product Category", field: "category", minWidth: 150 },
-    { headerName: "Size", field: "size", minWidth: 100 },
-    { headerName: "GSM", field: "gsm", minWidth: 100 },
-    { headerName: "Qty", field: "quantity", minWidth: 100 },
+    { headerName: "Invoice No", field: "orderId.invoiceNo", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Invoice Number", },
+    { headerName: "Customer Name", field: "orderId.customerName", minWidth: 150 , tooltipValueGetter: (params) => params.value || "No Customer Name",},
+    { headerName: "Product Name", field: "productName", minWidth: 150 ,  tooltipValueGetter: (params) => params.value || "No Product Name",},
+    { headerName: "Product Category", field: "category", minWidth: 150 , tooltipValueGetter: (params) => params.value || "No Product category", },
+    { headerName: "Size", field: "size", minWidth: 100,  tooltipValueGetter: (params) => params.value || "No Size Specified", },
+    { headerName: "GSM", field: "gsm", minWidth: 100 ,  tooltipValueGetter: (params) => params.value || "No GSM Specified",},
+    { headerName: "Qty", field: "quantity", minWidth: 100 ,  tooltipValueGetter: (params) => params.value || "No quantity Specified",},
     {
       headerName: "Created Date",
       field: "createdAt",
@@ -131,7 +131,9 @@ const Riso = ({ data, setData }) => {
           }
           return 1; // Cell value is after filter date
         }
-      }
+      },
+      tooltipValueGetter: (params) =>
+        params.value ? `Date: ${new Date(params.value).toLocaleDateString()}` : "No Date provided",
     },
     {
       headerName: "Actions",
@@ -154,6 +156,10 @@ const Riso = ({ data, setData }) => {
     }
   };
 
+  const gridOptions = {
+    enableBrowserTooltips: true, // Enable browser tooltips globally
+    tooltipShowDelay: 500, // Set a delay for the tooltip
+  };
 
   return (
     <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
@@ -163,6 +169,7 @@ const Riso = ({ data, setData }) => {
           columnDefs={columns}
           defaultColDef={defaultColDef}
           pagination={true}
+          gridOptions={gridOptions}
         />
       </div>
     </Container>

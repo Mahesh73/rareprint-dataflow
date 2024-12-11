@@ -117,7 +117,6 @@ const Order = () => {
     formData["paymentMethod"] = paymentMethod;
     formData["product"] = products;
     createOrder(formData);
-    console.log(formData);
   };
 
   const handleChange = (e) => {

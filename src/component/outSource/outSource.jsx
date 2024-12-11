@@ -57,9 +57,9 @@ const OutSource = () => {
     );
   };
   const columns = [
-    { headerName: "Vendor Name", field: "vendorName", minWidth: 150 },
-    { headerName: "Category", field: "category", minWidth: 150 },
-    { headerName: "Cost", field: "cost", minWidth: 80 },
+    { headerName: "Vendor Name", field: "vendorName", minWidth: 150 ,tooltipValueGetter: (params) => params.value || "No Vendor Name specified",},
+    { headerName: "Category", field: "category", tooltipValueGetter: (params) => params.value || "No Category specified",minWidth: 150 },
+    { headerName: "Cost", field: "cost",  tooltipValueGetter: (params) => params.value ? `Cost: ${params.value}` : "No Cost specified",minWidth: 80 },
     {
       headerName: "Created At",
       field: "createdAt",
@@ -87,6 +87,10 @@ const OutSource = () => {
       valueFormatter: ({ value }) =>
         value ? new Date(value).toLocaleDateString() : "",
       minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value
+          ? `Created At: ${new Date(params.value).toLocaleDateString()}`
+          : "No Creation Date specified",
     },
     {
       headerName: "Due Date",
@@ -115,15 +119,21 @@ const OutSource = () => {
       valueFormatter: ({ value }) =>
         value ? new Date(value).toLocaleDateString() : "",
       minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value
+          ? `Due Date: ${new Date(params.value).toLocaleDateString()}`
+          : "No Due Date specified",
     },
-    { headerName: "Extra Charges", field: "extraCharges", minWidth: 150 },
-    { headerName: "GSM", field: "gsm", minWidth: 80 },
-    { headerName: "Order ID", field: "orderId", minWidth: 150 },
-    { headerName: "Other Details", field: "otherDetails", minWidth: 150 },
-    { headerName: "Product ID", field: "productId", minWidth: 150 },
-    { headerName: "Product Name", field: "productName", minWidth: 150 },
-    { headerName: "Quantity", field: "quantity", minWidth: 80 },
-    { headerName: "Size", field: "size", minWidth: 80 },
+    { headerName: "Extra Charges", field: "extraCharges", minWidth: 150 , tooltipValueGetter: (params) =>
+      params.value ? `Extra Charges: ${params.value}` : "No Extra Charges",},
+    { headerName: "GSM", field: "gsm", minWidth: 80 ,tooltipValueGetter: (params) => params.value || "No GSM specified",},
+    { headerName: "Order ID", field: "orderId", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Order ID specified", },
+    { headerName: "Other Details", field: "otherDetails", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Other Details specified", },
+    { headerName: "Product ID", field: "productId", minWidth: 150 ,tooltipValueGetter: (params) => params.value || "No Product ID specified"},
+    { headerName: "Product Name", field: "productName", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Product Name specified", },
+    { headerName: "Quantity", field: "quantity", minWidth: 80, tooltipValueGetter: (params) =>
+      params.value ? `Quantity: ${params.value}` : "No Quantity specified", },
+    { headerName: "Size", field: "size", minWidth: 80,  tooltipValueGetter: (params) => params.value || "No Size specified", },
     {
       headerName: "Updated At",
       field: "updatedAt",
@@ -151,6 +161,10 @@ const OutSource = () => {
       valueFormatter: ({ value }) =>
         value ? new Date(value).toLocaleDateString() : "",
       minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value
+          ? `Updated At: ${new Date(params.value).toLocaleDateString()}`
+          : "No Update Date specified",
     },
     {
       headerName: "Actions",
@@ -175,6 +189,11 @@ const OutSource = () => {
   let navigate = useNavigate();
   const goToDashboard = () => {
     navigate("/"); // Navigate to the home page or dashboard
+  };
+
+  const gridOptions = {
+    enableBrowserTooltips: true, // Enable browser tooltips globally
+    tooltipShowDelay: 500, // Set a delay for the tooltip
   };
 
   return (
@@ -205,7 +224,7 @@ const OutSource = () => {
             rowData={vendor}
             columnDefs={columns}
             defaultColDef={defaultColDef}
-           
+            gridOptions={gridOptions}
             pagination={true}
           />
         </div>
