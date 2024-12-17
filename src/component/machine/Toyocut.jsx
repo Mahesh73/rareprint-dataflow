@@ -55,17 +55,18 @@ const Toyocut = ({ data, setData }) => {
   };
 
   const columnDefs = [
-    { headerName: "Invoice No", field: "orderId.invoiceNo", sortable: true, filter: true },
-    { headerName: "Customer Name", field: "orderId.customerName", sortable: true, filter: true },
-    { headerName: "Product Name", field: "productName", sortable: true, filter: true },
-    { headerName: "Product Category", field: "category", sortable: true, filter: true },
-    { headerName: "Size", field: "size", sortable: true, filter: true },
-    { headerName: "GSM", field: "gsm", sortable: true, filter: true },
-    { headerName: "Qty", field: "quantity", sortable: true, filter: true },
-    { headerName: "Prod Qty", field: "prodQty", sortable: true, filter: true },
+    { headerName: "Invoice No", field: "orderId.invoiceNo", sortable: true, filter: true, tooltipValueGetter: (params) => params.value || "No Invoice Number" },
+    { headerName: "Customer Name", field: "orderId.customerName", sortable: true, filter: true, tooltipValueGetter: (params) => params.value || "No Customer Name" },
+    { headerName: "Product Name", field: "productName", sortable: true, filter: true,tooltipValueGetter: (params) => params.value || "No Product Name" },
+    { headerName: "Product Category", field: "category", sortable: true, filter: true,tooltipValueGetter: (params) => params.value || "No Product category" },
+    { headerName: "Size", field: "size", sortable: true, filter: true,tooltipValueGetter: (params) => params.value || "No Size Specified" },
+    { headerName: "GSM", field: "gsm", sortable: true, filter: true,tooltipValueGetter: (params) => params.value || "No GSM Specified" },
+    { headerName: "Qty", field: "quantity", sortable: true, filter: true, tooltipValueGetter: (params) => params.value || "No quantity Specified" },
+    { headerName: "Prod Qty", field: "prodQty", sortable: true, filter: true, tooltipValueGetter: (params) => params.value || "No Prod Qty Specified" },
     {
       headerName: "Action",
       pinned: "right",
+      width: 100,
       field: "action",
       filter: false,
       sortable: false,
@@ -102,7 +103,7 @@ const Toyocut = ({ data, setData }) => {
           </div>
         );
       },
-      minWidth: 300,
+     
     },
   ];
 
@@ -112,6 +113,10 @@ const Toyocut = ({ data, setData }) => {
     filter: true,
   };
 
+  const gridOptions = {
+    enableBrowserTooltips: true, // Enable browser tooltips globally
+    tooltipShowDelay: 500, // Set a delay for the tooltip
+  };
   return (
     <div className={"ag-theme-quartz"} style={{ width: "100%", height: "75vh" }}>
       <AgGridReact
@@ -119,6 +124,7 @@ const Toyocut = ({ data, setData }) => {
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         pagination={true}
+        gridOptions={gridOptions}
         onGridReady={(params) => setGridApi(params.api)}
       />
     </div>

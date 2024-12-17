@@ -62,29 +62,33 @@ const Xerox = ({ data, setData }) => {
       field: "orderId.invoiceNo",
       sortable: true,
       filter: true,
+      tooltipValueGetter: (params) => params.value || "No Invoice Number"
     },
     {
       headerName: "Customer Name",
       field: "orderId.customerName",
       sortable: true,
       filter: true,
+      tooltipValueGetter: (params) => params.value || "No Customer Name"
     },
     {
       headerName: "Product Name",
       field: "productName",
       sortable: true,
       filter: true,
+      tooltipValueGetter: (params) => params.value || "No Product Name"
     },
     {
       headerName: "Product Category",
       field: "category",
       sortable: true,
       filter: true,
+      tooltipValueGetter: (params) => params.value || "No Product category"
     },
-    { headerName: "Size", field: "size", sortable: true, filter: true },
-    { headerName: "GSM", field: "gsm", sortable: true, filter: true },
-    { headerName: "Qty", field: "quantity", sortable: true, filter: true },
-    { headerName: "Prod Qty", field: "prodQty", sortable: true, filter: true },
+    { headerName: "Size", field: "size", sortable: true, filter: true ,tooltipValueGetter: (params) => params.value || "No Size Specified"},
+    { headerName: "GSM", field: "gsm", sortable: true, filter: true ,tooltipValueGetter: (params) => params.value || "No GSM Specified"},
+    { headerName: "Qty", field: "quantity", sortable: true, filter: true ,tooltipValueGetter: (params) => params.value || "No Qty Specified"},
+    { headerName: "Prod Qty", field: "prodQty", sortable: true, filter: true ,tooltipValueGetter: (params) => params.value || "No Prod Qty Specified"},
     {
       headerName: "Action",
       pinned: "right",
@@ -124,7 +128,7 @@ const Xerox = ({ data, setData }) => {
           </div>
         );
       },
-      minWidth: 300,
+      width: 100,
     },
   ];
 
@@ -133,6 +137,11 @@ const Xerox = ({ data, setData }) => {
     minWidth: 150,
     filter: true,
     resizable: true,
+  };
+
+  const gridOptions = {
+    enableBrowserTooltips: true, // Enable browser tooltips globally
+    tooltipShowDelay: 500, // Set a delay for the tooltip
   };
 
   return (
@@ -145,6 +154,7 @@ const Xerox = ({ data, setData }) => {
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         pagination={true}
+        gridOptions={gridOptions}
         onGridReady={(params) => setGridApi(params.api)}
       />
     </div>

@@ -20,6 +20,7 @@ const AddProduct = ({
       ? products[productDetail.index].productDescription
       : "",
   });
+  console.log(modelData)
 
   useEffect(() => {
     if (edit) {
@@ -76,6 +77,7 @@ const AddProduct = ({
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the file
+    console.log(file)
     setModelData({
       ...modelData,
       design: file, // Set the file in the state

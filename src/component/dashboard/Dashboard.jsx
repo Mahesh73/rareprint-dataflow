@@ -14,14 +14,12 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showDetails, setShowDetails] = useState([]);
-  const [rows, setRows] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
       const response = await axiosInstance.get("/api/orders");
       setOrders(response.data);
-      setRows(response.data);
     };
     fetchOrders();
   }, []);
@@ -51,6 +49,7 @@ const Dashboard = () => {
   };
 
   const handleShowModal = (product) => {
+
     setShowDetails(product);
     setShowModal(true);
   };
@@ -80,22 +79,26 @@ const Dashboard = () => {
     {
       headerName: "Customer Name",
       field: "customerName",
-      minWidth: 155
+      minWidth: 155,
+      tooltipValueGetter: (params) => params.value || "No Customer Name provided",
     },
     {
       headerName: "Customer No",
       field: "customerNo",
-      minWidth: 135
+      minWidth: 135,
+      tooltipValueGetter: (params) => params.value || "No Customer No provided",
     },
     {
       headerName: "Customer Address",
       field: "customerAdd",
-      minWidth: 165
+      minWidth: 165,
+      tooltipValueGetter: (params) => params.value || "No Address provided",
     },
     {
       headerName: "Invoice No",
       field: "invoiceNo",
-      minWidth: 120
+      minWidth: 120,
+      tooltipValueGetter: (params) => params.value || "No Invoice No provided",
     },
     {
       headerName: "Date",
@@ -124,11 +127,14 @@ const Dashboard = () => {
       },
       // Keep the original valueFormatter if you want to display dates in a specific format
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
+      tooltipValueGetter: (params) =>
+        params.value ? `Date: ${new Date(params.value).toLocaleDateString()}` : "No Date provided",
     },
     {
       headerName: "Order Age",
       field: "age",
       minWidth: 115,
+      tooltipValueGetter: (params) => `Order Age: ${params.value || "N/A"}`,
     },
     {
       headerName: "Updated Date",
@@ -157,11 +163,14 @@ const Dashboard = () => {
       },
       // Keep the original valueFormatter if you want to display dates in a specific format
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
+      tooltipValueGetter: (params) =>
+        params.value ? `Updated Date: ${new Date(params.value).toLocaleDateString()}` : "No Updated Date provided",
     },
     {
       headerName: "Sales Executive",
       field: "salesExecutive",
       minWidth: 145,
+      tooltipValueGetter: (params) => `Sales Executive: ${params.value || "N/A"}`,
     },
     {
       headerName: "Payment Method",
@@ -206,14 +215,15 @@ const Dashboard = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
+     
       <div
-        className="m-1"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+      className="m-1"
+       style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
       >
         <Breadcrumb>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -229,13 +239,15 @@ const Dashboard = () => {
         style={{ width: "100%", height: "80vh" }}
       >
         <AgGridReact
-          rowData={rows}
+          rowData={orders}
           pagination={true}
           gridOptions={gridOptions}
           columnDefs={columns}
           defaultColDef={defaultColDef}
         />
       </div>
+
+      
 
       {showModal && (
         <ViewProduct

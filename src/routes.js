@@ -4,7 +4,7 @@ import Order from "./component/order/Order";
 import Product from "./component/product/Product";
 import Production from "./component/production/Production";
 import Packaging from "./component/packaging/Packaging";
-import Vendor from "./component/vendor/vendor"
+import OutSource from "./component/outSource/outSource"
 
 const routes = [
   {
@@ -32,8 +32,8 @@ const routes = [
     element: <Packaging />,
   },
   {
-    path: "/vendor",
-    element: <Vendor/>,
+    path: "/outSource",
+    element: <OutSource/>,
   },
 ];
 
