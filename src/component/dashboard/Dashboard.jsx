@@ -14,14 +14,12 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showDetails, setShowDetails] = useState([]);
-  const [rows, setRows] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
       const response = await axiosInstance.get("/api/orders");
       setOrders(response.data);
-      setRows(response.data);
     };
     fetchOrders();
   }, []);
@@ -40,7 +38,7 @@ const Dashboard = () => {
         );
         if (response.status === 200) {
           toast.success(response.data.message);
-          setRows((prev) => prev.filter((item) => item._id !== id));
+          setOrders((prev) => prev.filter((item) => item._id !== id));
         } else {
           toast.error(response.data.message);
         }
@@ -241,7 +239,7 @@ const Dashboard = () => {
         style={{ width: "100%", height: "80vh" }}
       >
         <AgGridReact
-          rowData={rows}
+          rowData={orders}
           pagination={true}
           gridOptions={gridOptions}
           columnDefs={columns}

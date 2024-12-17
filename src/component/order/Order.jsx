@@ -74,7 +74,6 @@ const Order = () => {
         });
       }, {});
 
-
     try {
       if (location.state) {
         axiosInstance
@@ -110,8 +109,6 @@ const Order = () => {
       advanceDate,
       advanceType,
     };
-
-
     formData["advance"] =
       paymentMethod === "Advance" ? JSON.stringify(advance) : "0";
     formData["paymentMethod"] = paymentMethod;

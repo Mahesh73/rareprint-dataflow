@@ -14,11 +14,11 @@ const Production = () => {
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState([]);
-  const [rows, setRows] = useState([]);
+
   useEffect(() => {
     axiosInstance.get("/api/production-details").then((res) => {
       setOrders(res.data);
-      setRows(res.data);
+
     });
   }, [show]);
   const deleteProduct = async (orderId, productId) => {
@@ -33,7 +33,7 @@ const Production = () => {
         .delete(`/api/orders/${orderId}/products/${productId}`)
         .then((res) => {
           toast.success(res.data.message);
-          setRows((prev) =>
+          setOrders((prev) =>
             prev.filter((item) => item.productId !== productId)
           );
         });
@@ -44,20 +44,20 @@ const Production = () => {
     setShow(true);
   };
 
-  const renderTooltip = (props, value) => {
-    return (
-      <Tooltip id="cell-tooltip" {...props}>
-        {value.map((item) => (
-          <>
-            <span>
-              {item.status} {moment(item.updatedAt).format("DD-MM-YYYY")}
-            </span>
-            <br />
-          </>
-        ))}
-      </Tooltip>
-    );
-  };
+  // const renderTooltip = (props, value) => {
+  //   return (
+  //     <Tooltip id="cell-tooltip" {...props}>
+  //       {value.map((item) => (
+  //         <>
+  //           <span>
+  //             {item.status} {moment(item.updatedAt).format("DD-MM-YYYY")}
+  //           </span>
+  //           <br />
+  //         </>
+  //       ))}
+  //     </Tooltip>
+  //   );
+  // };
 
   const updateProduction = (row) => {
     setSelectedOrder(row);
@@ -399,7 +399,7 @@ const Production = () => {
         style={{ width: "100%", height: "80vh" }}
       >
         <AgGridReact
-          rowData={rows}
+          rowData={orders}
           pagination={true}
           gridOptions={gridOptions}
           columnDefs={columns}

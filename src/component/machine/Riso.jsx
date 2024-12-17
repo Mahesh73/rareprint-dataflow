@@ -66,7 +66,15 @@ const Riso = ({ data, setData }) => {
 
   // Cell Renderer for Actions
   const ActionButtonRenderer = (props) => {
-    const { orderId, productId, printedQty, quantity, design, _id } = props.data;
+    const {
+      orderId,
+      productId,
+      printedQty,
+      quantity,
+      design,
+      _id,
+      afterPrint,
+    } = props.data;
     return (
       <div
         style={{
@@ -80,48 +88,90 @@ const Riso = ({ data, setData }) => {
           <PrinterFill
             title="Start Printing"
             style={{ marginRight: "10px", cursor: "pointer" }}
-            onClick={() => startPrinting(orderId, productId, printedQty, quantity, design)}
+            onClick={() =>
+              startPrinting(orderId, productId, printedQty, quantity, design)
+            }
           />
         )}
         <TrashFill
           style={{ marginRight: "10px", cursor: "pointer" }}
           onClick={() => deleteProduction(_id)}
         />
+
         <Truck
           style={{ cursor: "pointer" }}
           onClick={() => moveToPackaging(orderId, productId)}
+          title={
+            props.data.afterPrint == "Packaging"
+              ? "Move to Packaging"
+              : "Move to Binding"
+          }
         />
       </div>
     );
   };
-  
 
   // Column Definitions
   const columns = [
-    { headerName: "Invoice No", field: "orderId.invoiceNo", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Invoice Number", },
-    { headerName: "Customer Name", field: "orderId.customerName", minWidth: 150 , tooltipValueGetter: (params) => params.value || "No Customer Name",},
-    { headerName: "Product Name", field: "productName", minWidth: 150 ,  tooltipValueGetter: (params) => params.value || "No Product Name",},
-    { headerName: "Product Category", field: "category", minWidth: 150 , tooltipValueGetter: (params) => params.value || "No Product category", },
-    { headerName: "Size", field: "size", minWidth: 100,  tooltipValueGetter: (params) => params.value || "No Size Specified", },
-    { headerName: "GSM", field: "gsm", minWidth: 100 ,  tooltipValueGetter: (params) => params.value || "No GSM Specified",},
-    { headerName: "Qty", field: "quantity", minWidth: 100 ,  tooltipValueGetter: (params) => params.value || "No quantity Specified",},
+    {
+      headerName: "Invoice No",
+      field: "orderId.invoiceNo",
+      minWidth: 150,
+      tooltipValueGetter: (params) => params.value || "No Invoice Number",
+    },
+    {
+      headerName: "Customer Name",
+      field: "orderId.customerName",
+      minWidth: 150,
+      tooltipValueGetter: (params) => params.value || "No Customer Name",
+    },
+    {
+      headerName: "Product Name",
+      field: "productName",
+      minWidth: 150,
+      tooltipValueGetter: (params) => params.value || "No Product Name",
+    },
+    {
+      headerName: "Product Category",
+      field: "category",
+      minWidth: 150,
+      tooltipValueGetter: (params) => params.value || "No Product category",
+    },
+    {
+      headerName: "Size",
+      field: "size",
+      minWidth: 100,
+      tooltipValueGetter: (params) => params.value || "No Size Specified",
+    },
+    {
+      headerName: "GSM",
+      field: "gsm",
+      minWidth: 100,
+      tooltipValueGetter: (params) => params.value || "No GSM Specified",
+    },
+    {
+      headerName: "Qty",
+      field: "quantity",
+      minWidth: 100,
+      tooltipValueGetter: (params) => params.value || "No quantity Specified",
+    },
     {
       headerName: "Created Date",
       field: "createdAt",
       minWidth: 150,
       valueFormatter: (params) => new Date(params.value).toLocaleDateString(),
-      filter: 'agDateColumnFilter', // Add this to use AG Grid's date filter
+      filter: "agDateColumnFilter", // Add this to use AG Grid's date filter
       filterParams: {
         // Customize date filter parameters
         comparator: (filterLocalDateAtMidnight, cellValue) => {
           // Convert cell value to Date object
           const cellDate = new Date(cellValue);
-          
+
           // Normalize both dates to midnight for accurate comparison
           const filterDate = new Date(filterLocalDateAtMidnight);
           filterDate.setHours(0, 0, 0, 0);
           cellDate.setHours(0, 0, 0, 0);
-    
+
           // Compare dates
           if (cellDate.getTime() === filterDate.getTime()) {
             return 0; // Dates are equal
@@ -130,10 +180,12 @@ const Riso = ({ data, setData }) => {
             return -1; // Cell value is before filter date
           }
           return 1; // Cell value is after filter date
-        }
+        },
       },
       tooltipValueGetter: (params) =>
-        params.value ? `Date: ${new Date(params.value).toLocaleDateString()}` : "No Date provided",
+        params.value
+          ? `Date: ${new Date(params.value).toLocaleDateString()}`
+          : "No Date provided",
     },
     {
       headerName: "Actions",
@@ -152,8 +204,8 @@ const Riso = ({ data, setData }) => {
     flex: 1,
     filter: true,
     filterParams: {
-      buttons: ['reset', 'apply'] // This adds clear/reset functionality to all filters
-    }
+      buttons: ["reset", "apply"], // This adds clear/reset functionality to all filters
+    },
   };
 
   const gridOptions = {
@@ -163,7 +215,10 @@ const Riso = ({ data, setData }) => {
 
   return (
     <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
-      <div className={"ag-theme-quartz"} style={{ width: "100%", height: "75vh" }}>
+      <div
+        className={"ag-theme-quartz"}
+        style={{ width: "100%", height: "75vh" }}
+      >
         <AgGridReact
           rowData={data}
           columnDefs={columns}
