@@ -41,7 +41,6 @@ const Product = () => {
     } else {
       alert("Please fill in all the fields");
     }
-    console.log(products);
   };
   const addToList = () => {
     setQtyrate([...qtyRate, { quantity, rate }]);

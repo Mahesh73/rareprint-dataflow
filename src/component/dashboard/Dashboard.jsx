@@ -128,7 +128,7 @@ const Dashboard = () => {
       // Keep the original valueFormatter if you want to display dates in a specific format
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
       tooltipValueGetter: (params) =>
-        params.value ? `Date: ${new Date(params.value).toLocaleDateString()}` : "No Date provided",
+        params.value ? `Date & Time: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}` : "No Date provided",
     },
     {
       headerName: "Order Age",
@@ -164,7 +164,7 @@ const Dashboard = () => {
       // Keep the original valueFormatter if you want to display dates in a specific format
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString() : '',
       tooltipValueGetter: (params) =>
-        params.value ? `Updated Date: ${new Date(params.value).toLocaleDateString()}` : "No Updated Date provided",
+        params.value ? `Updated Date & Time: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}` : "No Updated Date provided",
     },
     {
       headerName: "Sales Executive",

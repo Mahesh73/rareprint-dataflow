@@ -20,7 +20,7 @@ const AddProduct = ({
       ? products[productDetail.index].productDescription
       : "",
   });
-  console.log(modelData)
+
 
   useEffect(() => {
     if (edit) {
@@ -77,7 +77,6 @@ const AddProduct = ({
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the file
-    console.log(file)
     setModelData({
       ...modelData,
       design: file, // Set the file in the state
@@ -128,7 +127,7 @@ const AddProduct = ({
               />
               {modelData.design && (
                 <small className="d-block mt-2">
-                  <strong>Current File: </strong>{modelData.design.name}
+                  <strong>Current File: </strong>{modelData.design.name || modelData.design}
                 </small>
               )}
             </Form.Group>

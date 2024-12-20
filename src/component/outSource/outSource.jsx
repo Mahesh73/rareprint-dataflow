@@ -13,7 +13,6 @@ const OutSource = () => {
   useEffect(() => {
     axiosInstance.get("/api/outsource").then((res) => {
       setVendor(res.data);
-      console.log(res.data);
     });
   }, [show]);
 
@@ -28,7 +27,6 @@ const OutSource = () => {
       axiosInstance
         .delete(`/api/outsource/${vendorID}`)
         .then((res) => {
-          console.log(res.data.message);
           toast.success(res.data.message);
           setVendor((prev) => prev.filter((item) => item._id !== vendorID));
         })
@@ -89,7 +87,7 @@ const OutSource = () => {
       minWidth: 150,
       tooltipValueGetter: (params) =>
         params.value
-          ? `Created At: ${new Date(params.value).toLocaleDateString()}`
+          ? `Created Date & Time At: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}`
           : "No Creation Date specified",
     },
     {
@@ -163,7 +161,7 @@ const OutSource = () => {
       minWidth: 150,
       tooltipValueGetter: (params) =>
         params.value
-          ? `Updated At: ${new Date(params.value).toLocaleDateString()}`
+          ? `Updated Date & Time At: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}`
           : "No Update Date specified",
     },
     {
