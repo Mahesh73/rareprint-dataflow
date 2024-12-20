@@ -184,7 +184,7 @@ const Riso = ({ data, setData }) => {
       },
       tooltipValueGetter: (params) =>
         params.value
-          ? `Date: ${new Date(params.value).toLocaleDateString()}`
+          ? `Date & Time: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}`
           : "No Date provided",
     },
     {

@@ -98,7 +98,7 @@ const Xerox = ({ data, setData }) => {
       resizable: false,
       cellRenderer: (params) => {
         const item = params.data;
-        console.log(item);
+     
         return (
           <div
             style={{
