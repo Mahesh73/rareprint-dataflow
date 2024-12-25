@@ -27,7 +27,7 @@ const Vendor = () => {
         </div>
       </div>
 
-      {show && <CreateVendor show={show} setShow={setShow}/>}
+      {show && <CreateVendor show={show} setShow={setShow} />}
     </Container>
   );
 };

@@ -101,17 +101,30 @@ const StartProduction = ({
     }
   };
   const submitOutSource = (_formData) => {
+    if (productionData) {
+      axiosInstance
+      .put(`/api/orders/${orderId}/products/${productId}/production`, _formData)
+      .then((res) => {
+        toast.success(res.data.message);
+        setShow(false);
+        navigate("/outsource");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error);
+      });
+    } else {
     axiosInstance
       .post(`/api/orders/${orderId}/products/${productId}/production`, _formData)
       .then((res) => {
         toast.success(res.data.message);
         setShow(false);
-        // navigate("/machine");
+        navigate("/outsource");
       })
       .catch((err) => {
         console.log(err);
         toast.error(err.response.data.error);
       });
+    }
   };
   const submitProduction = (e) => {
     e.preventDefault();

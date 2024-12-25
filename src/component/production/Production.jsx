@@ -82,8 +82,8 @@ const Production = () => {
           />
         )}
 
-        {props.data.status[props.data.status.length - 1].status ===
-          "Printing" && (
+        {(props.data.status[props.data.status.length - 1].status ===
+          "Printing" || props.data?.production?.chooseType === "outsource") && (
           <PencilSquare
             onClick={() => updateProduction(props.data)}
             title="Update Production"
@@ -150,14 +150,6 @@ const Production = () => {
      
   };
 
- const ProductiontypeRenderer  = (props) => { 
-    return(
-      <div>
-     
-      </div>
-      )
-  };
-
   const columns = [
     {
       headerName: "Invoice No",
@@ -192,7 +184,7 @@ const Production = () => {
           const { chooseType, selectMachine } = params.data.production;
     
           if (chooseType === "outsource") {
-            return "OutSource";
+            return `OutSource - ${params.data.production.selectVendor}`;
           } else if (chooseType === "inHouse") {
             return selectMachine
               ? `InHouse - Machine: ${selectMachine.toUpperCase()}`
@@ -206,13 +198,12 @@ const Production = () => {
       tooltipComponentParams: {
         html: true, // Allow HTML in tooltip text
       },
-      // cellRenderer: ProductiontypeRenderer,
       cellRenderer: (params) => {
         if (params.data && params.data.production) {
           const { chooseType, selectMachine } = params.data.production;
     
           if (chooseType === "outsource") {
-            return "OutSource";
+            return `OutSource - ${params.data.production.selectVendor}`;
           } else if (chooseType === "inHouse") {
             return selectMachine ? `InHouse (${selectMachine.toUpperCase()})` : "InHouse";
           } else if (chooseType === "sheetProduction") {
@@ -336,11 +327,8 @@ const Production = () => {
     enableBrowserTooltips: true, // Enable browser tooltips globally
     tooltipShowDelay: 500, // Set a delay for the tooltip
   };
-  //eoc by mahendra
-  // const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-  //   useTable({ columns, data: orders });
   return (
-    <div className="m-4">
+    <div className="m-3">
       <div
         style={{
           display: "flex",
@@ -358,42 +346,6 @@ const Production = () => {
           <Breadcrumb.Item active>Production</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      {/* <div className="table-scrollable">
-        <Table {...getTableProps()} striped bordered hover>
-          <thead>
-            {headerGroups?.map((headerGroup, i) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                {headerGroup.headers.map((column, _i) => (
-                  <th
-                    key={_i}
-                    {...column.getHeaderProps({
-                      style: { minWidth: column.minWidth, width: column.width },
-                    })}
-                  >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows?.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={i}>
-                  {row?.cells?.map((cell, _i) => {
-                    return (
-                      <td {...cell.getCellProps()} key={_i}>
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </div> */}
       <div
         className={"ag-theme-quartz"}
         style={{ width: "100%", height: "80vh" }}
@@ -404,7 +356,7 @@ const Production = () => {
           gridOptions={gridOptions}
           columnDefs={columns}
           defaultColDef={defaultColDef}
-          domLayout="normal"  // Adjusts height dynamically
+          domLayout="normal"  
         />
       </div>
 
