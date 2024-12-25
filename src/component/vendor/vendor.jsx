@@ -9,7 +9,7 @@ const Vendor = () => {
   };
 
   return (
-    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
+    <div className="m-3">
       <div
         className="m-1"
         style={{
@@ -28,7 +28,7 @@ const Vendor = () => {
       </div>
 
       {show && <CreateVendor show={show} setShow={setShow} />}
-    </Container>
+    </div>
   );
 };
 
