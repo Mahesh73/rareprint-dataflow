@@ -6,14 +6,14 @@ import { Container } from "react-bootstrap";
 
 const Packaging = () => {
   const [packagingOrders, setPackagingOrders] = useState([]);
-  const [columnDefs] = useState([
+  const columnDefs =  [
     { headerName: "Invoice No", field: "invoiceNo", sortable: true, filter: true },
     { headerName: "Customer Name", field: "customerName", sortable: true, filter: true },
     { headerName: "Product Name", field: "productName", sortable: true, filter: true },
     { headerName: "Product Category", field: "productCategory", sortable: true, filter: true },
     { headerName: "Quantity", field: "quantity", sortable: true, filter: true },
     { headerName: "Status", field: "packagingStatus", sortable: true, filter: true },
-  ]);
+  ];
 
   useEffect(() => {
     // Fetch packaging orders data from the backend
