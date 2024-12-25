@@ -24,6 +24,9 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
                      <ListGroup.Item action href="/outSource">
                         OutSource
                     </ListGroup.Item>
+                    <ListGroup.Item action href="/vendor">
+                        Vendor
+                    </ListGroup.Item>
                 </ListGroup>
             </Offcanvas.Body>
         </Offcanvas>
