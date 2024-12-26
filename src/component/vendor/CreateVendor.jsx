@@ -7,8 +7,7 @@ const CreateVendor = ({
   setShow
 }) => {
 
-
-  const handleClose = () => setShow(false);
+ const handleClose = () => setShow(false);
 
   return (
     <div
@@ -19,7 +18,6 @@ const CreateVendor = ({
         <Modal.Header closeButton>
           <Modal.Title>Register Vendor</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="vendorName">
@@ -31,27 +29,15 @@ const CreateVendor = ({
               required
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="vendorCity">
-            <Form.Label>City</Form.Label>
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter City"
-              name="City"
+              placeholder="Enter email"
+              name="email"
               required
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="vendorDescription">
-            <Form.Label>Address</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Address"
-              name="vendorDescription"
-              required
-            />
-          </Form.Group>
-
           <Form.Group className="mb-3" controlId="vendorNumber">
             <Form.Label>Number</Form.Label>
             <Form.Control
@@ -59,6 +45,15 @@ const CreateVendor = ({
               placeholder="Enter number"
               name="vendorNumber"
               maxLength={10}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="vendorDescription">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Address"
+              name="vendorDescription"
               required
             />
           </Form.Group>
