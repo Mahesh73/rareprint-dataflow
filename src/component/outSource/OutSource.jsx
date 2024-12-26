@@ -39,25 +39,42 @@ const OutSource = () => {
   const ActionButtonRenderer = (props) => {
     const { _id } = props.data;
     return (
-    <div
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100%", // Ensure it spans the full cell height
-    }}
-    >
-      <TrashFill
-        style={{ marginRight: "10px", cursor: "pointer" }}
-        onClick={() => deleteVendor(_id)}
-      />
-    </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%", // Ensure it spans the full cell height
+        }}
+      >
+        <TrashFill
+          style={{ marginRight: "10px", cursor: "pointer" }}
+          onClick={() => deleteVendor(_id)}
+        />
+      </div>
     );
   };
   const columns = [
-    { headerName: "Vendor Name", field: "vendorName", minWidth: 150 ,tooltipValueGetter: (params) => params.value || "No Vendor Name specified",},
-    { headerName: "Category", field: "category", tooltipValueGetter: (params) => params.value || "No Category specified",minWidth: 150 },
-    { headerName: "Cost", field: "cost",  tooltipValueGetter: (params) => params.value ? `Cost: ${params.value}` : "No Cost specified",minWidth: 80 },
+    {
+      headerName: "Vendor Name",
+      field: "vendorName",
+      minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value || "No Vendor Name specified",
+    },
+    {
+      headerName: "Category",
+      field: "category",
+      tooltipValueGetter: (params) => params.value || "No Category specified",
+      minWidth: 150,
+    },
+    {
+      headerName: "Cost",
+      field: "cost",
+      tooltipValueGetter: (params) =>
+        params.value ? `Cost: ${params.value}` : "No Cost specified",
+      minWidth: 80,
+    },
     {
       headerName: "Created At",
       field: "createdAt",
@@ -87,7 +104,11 @@ const OutSource = () => {
       minWidth: 150,
       tooltipValueGetter: (params) =>
         params.value
-          ? `Created Date & Time At: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}`
+          ? `Created Date & Time At: ${new Date(
+              params.value
+            ).toLocaleDateString()} ${new Date(
+              params.value
+            ).toLocaleTimeString()}`
           : "No Creation Date specified",
     },
     {
@@ -122,16 +143,58 @@ const OutSource = () => {
           ? `Due Date: ${new Date(params.value).toLocaleDateString()}`
           : "No Due Date specified",
     },
-    { headerName: "Extra Charges", field: "extraCharges", minWidth: 150 , tooltipValueGetter: (params) =>
-      params.value ? `Extra Charges: ${params.value}` : "No Extra Charges",},
-    { headerName: "GSM", field: "gsm", minWidth: 80 ,tooltipValueGetter: (params) => params.value || "No GSM specified",},
-    { headerName: "Order ID", field: "orderId", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Order ID specified", },
-    { headerName: "Other Details", field: "otherDetails", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Other Details specified", },
-    { headerName: "Product ID", field: "productId", minWidth: 150 ,tooltipValueGetter: (params) => params.value || "No Product ID specified"},
-    { headerName: "Product Name", field: "productName", minWidth: 150, tooltipValueGetter: (params) => params.value || "No Product Name specified", },
-    { headerName: "Quantity", field: "quantity", minWidth: 80, tooltipValueGetter: (params) =>
-      params.value ? `Quantity: ${params.value}` : "No Quantity specified", },
-    { headerName: "Size", field: "size", minWidth: 80,  tooltipValueGetter: (params) => params.value || "No Size specified", },
+    {
+      headerName: "Extra Charges",
+      field: "extraCharges",
+      minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value ? `Extra Charges: ${params.value}` : "No Extra Charges",
+    },
+    {
+      headerName: "GSM",
+      field: "gsm",
+      minWidth: 80,
+      tooltipValueGetter: (params) => params.value || "No GSM specified",
+    },
+    {
+      headerName: "Order ID",
+      field: "orderId",
+      minWidth: 150,
+      tooltipValueGetter: (params) => params.value || "No Order ID specified",
+    },
+    {
+      headerName: "Other Details",
+      field: "otherDetails",
+      minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value || "No Other Details specified",
+    },
+    {
+      headerName: "Product ID",
+      field: "productId",
+      minWidth: 150,
+      tooltipValueGetter: (params) => params.value || "No Product ID specified",
+    },
+    {
+      headerName: "Product Name",
+      field: "productName",
+      minWidth: 150,
+      tooltipValueGetter: (params) =>
+        params.value || "No Product Name specified",
+    },
+    {
+      headerName: "Quantity",
+      field: "quantity",
+      minWidth: 80,
+      tooltipValueGetter: (params) =>
+        params.value ? `Quantity: ${params.value}` : "No Quantity specified",
+    },
+    {
+      headerName: "Size",
+      field: "size",
+      minWidth: 80,
+      tooltipValueGetter: (params) => params.value || "No Size specified",
+    },
     {
       headerName: "Updated At",
       field: "updatedAt",
@@ -161,7 +224,11 @@ const OutSource = () => {
       minWidth: 150,
       tooltipValueGetter: (params) =>
         params.value
-          ? `Updated Date & Time At: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}`
+          ? `Updated Date & Time At: ${new Date(
+              params.value
+            ).toLocaleDateString()} ${new Date(
+              params.value
+            ).toLocaleTimeString()}`
           : "No Update Date specified",
     },
     {
@@ -195,39 +262,37 @@ const OutSource = () => {
   };
 
   return (
-    <Container style={{ maxWidth: "2000px", padding: "0 20px" }}>
-      <div className="m-4">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Breadcrumb>
-            <Breadcrumb.Item
-              onClick={goToDashboard}
-              style={{ cursor: "pointer" }}
-            >
-              Home
-            </Breadcrumb.Item>
-            <Breadcrumb.Item active>OutSource</Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
-        <div
-          className={"ag-theme-quartz"}
-          style={{ width: "100%", height: "80vh" }}
-        >
-          <AgGridReact
-            rowData={vendor}
-            columnDefs={columns}
-            defaultColDef={defaultColDef}
-            gridOptions={gridOptions}
-            pagination={true}
-          />
-        </div>
+    <div className="m-3">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Breadcrumb>
+          <Breadcrumb.Item
+            onClick={goToDashboard}
+            style={{ cursor: "pointer" }}
+          >
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>OutSource</Breadcrumb.Item>
+        </Breadcrumb>
       </div>
-    </Container>
+      <div
+        className={"ag-theme-quartz"}
+        style={{ width: "100%", height: "80vh" }}
+      >
+        <AgGridReact
+          rowData={vendor}
+          columnDefs={columns}
+          defaultColDef={defaultColDef}
+          gridOptions={gridOptions}
+          pagination={true}
+        />
+      </div>
+    </div>
   );
 };
 

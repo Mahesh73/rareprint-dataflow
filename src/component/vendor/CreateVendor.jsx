@@ -1,18 +1,14 @@
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
-const CreateVendor = ({
-  show,
-  setShow
-}) => {
-
- const handleClose = () => setShow(false);
+const CreateVendor = ({ show, setShow }) => {
+  const handleClose = () => setShow(false);
 
   return (
     <div
       className="modal show"
-      style={{ display: 'block', position: 'initial' }}
+      style={{ display: "block", position: "initial" }}
     >
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -61,12 +57,14 @@ const CreateVendor = ({
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
           <Button variant="primary">Save changes</Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
-}
+};
 
 export default CreateVendor;

@@ -46,20 +46,31 @@ const Riso = ({ data, setData }) => {
     }
   };
 
-  const moveToPackaging = (orderId, productId) => {
+  const moveToAfterPrint = (orderId, productId, afterPrint) => {
     Swal.fire({
-      title: "Do you want to dispatch this order?",
+      title: `Do you move to ${afterPrint === 'packaging' ? 'Packaging' : 'Binding'} this order?`,
       showCancelButton: true,
       confirmButtonText: "Save",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosInstance
-          .put("/api/production/moveToPackaging", { orderId, productId })
-          .then((res) => {
-            toast.success(res.data.message);
-            navigate("/packaging");
-          })
-          .catch((error) => console.error("Error:", error));
+        let machine = 'RISO';
+        if (afterPrint === "packaging") {
+          axiosInstance
+            .put("/api/production/moveToPackaging", { orderId, productId, machine })
+            .then((res) => {
+              toast.success(res.data.message);
+              navigate("/packaging");
+            })
+            .catch((error) => console.error("Error:", error));
+        } else {
+          axiosInstance
+            .put("/api/production/moveToBinding", { orderId, productId, machine })
+            .then((res) => {
+              toast.success(res.data.message);
+              // navigate("/binding");
+            })
+            .catch((error) => console.error("Error:", error));
+        }
       }
     });
   };
@@ -86,7 +97,7 @@ const Riso = ({ data, setData }) => {
       >
         {design && (
           <PrinterFill
-            title="Start Printing"
+            title="Print"
             style={{ marginRight: "10px", cursor: "pointer" }}
             onClick={() =>
               startPrinting(orderId, productId, printedQty, quantity, design)
@@ -94,17 +105,16 @@ const Riso = ({ data, setData }) => {
           />
         )}
         <TrashFill
+          title="Delete"
           style={{ marginRight: "10px", cursor: "pointer" }}
           onClick={() => deleteProduction(_id)}
         />
 
         <Truck
           style={{ cursor: "pointer" }}
-          onClick={() => moveToPackaging(orderId, productId)}
+          onClick={() => moveToAfterPrint(orderId, productId, afterPrint)}
           title={
-            props.data.afterPrint == "Packaging"
-              ? "Move to Packaging"
-              : "Move to Binding"
+            afterPrint == "packaging" ? "Move to Packaging" : "Move to Binding"
           }
         />
       </div>
@@ -184,7 +194,11 @@ const Riso = ({ data, setData }) => {
       },
       tooltipValueGetter: (params) =>
         params.value
-          ? `Date & Time: ${new Date(params.value).toLocaleDateString()} ${new Date(params.value).toLocaleTimeString()}`
+          ? `Date & Time: ${new Date(
+              params.value
+            ).toLocaleDateString()} ${new Date(
+              params.value
+            ).toLocaleTimeString()}`
           : "No Date provided",
     },
     {

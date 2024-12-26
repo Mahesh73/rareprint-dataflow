@@ -4,7 +4,7 @@ import Order from "./component/order/Order";
 import Product from "./component/product/Product";
 import Production from "./component/production/Production";
 import Packaging from "./component/packaging/Packaging";
-import OutSource from "./component/outSource/outSource";
+import OutSource from "./component/outSource/OutSource";
 import Vendor from "./component/vendor/Vendor";
 
 const routes = [
