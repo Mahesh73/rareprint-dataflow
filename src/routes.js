@@ -6,6 +6,7 @@ import Production from "./component/production/Production";
 import Packaging from "./component/packaging/Packaging";
 import OutSource from "./component/outSource/OutSource";
 import Vendor from "./component/vendor/Vendor";
+import Binding from "./component/binding/Binding";
 
 const routes = [
   {
@@ -40,6 +41,10 @@ const routes = [
     path: "/vendor",
     element: <Vendor/>,
   },
+  {
+    path: "/binding",
+    element: <Binding/>,
+  }
 ];
 
 export default routes;
