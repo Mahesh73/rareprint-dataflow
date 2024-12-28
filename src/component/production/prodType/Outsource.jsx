@@ -1,45 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import axiosInstance from "../../../axiosConfig"
 
 const Outsource = ({ formData, setFormData }) => {
-  const vendorList = [
-    {
-      name: "SOFTLINK DIGITAL",
-      city: "NAGPUR",
-    },
-    {
-      name: "FRIENDS CARD",
-      city: "NAGPUR",
-    },
-    {
-      name: "SRM ADVERTISEMENT",
-      city: "NAGPUR",
-    },
-    {
-      name: "SANGAM NOVELTIES",
-      city: "DELHI",
-    },
-    {
-      name: "JINDAL NOVELTIES",
-      city: "DELHI",
-    },
-    {
-      name: "SN PRINTERS",
-      city: "CHANDRAPUR",
-    },
-    {
-      name: "JANKI ENTERPRISES",
-      city: "NAGPUR",
-    },
-    {
-      name: "JAVED PRINTERS",
-      city: "NAGPUR",
-    },
-    {
-      name: "MOHURLE PRINTERS",
-      city: "CHANDRAPUR",
-    },
-  ];
+  // const vendorList = [
+  //   {
+  //     name: "SOFTLINK DIGITAL",
+  //     city: "NAGPUR",
+  //   },
+  //   {
+  //     name: "FRIENDS CARD",
+  //     city: "NAGPUR",
+  //   },
+  //   {
+  //     name: "SRM ADVERTISEMENT",
+  //     city: "NAGPUR",
+  //   },
+  //   {
+  //     name: "SANGAM NOVELTIES",
+  //     city: "DELHI",
+  //   },
+  //   {
+  //     name: "JINDAL NOVELTIES",
+  //     city: "DELHI",
+  //   },
+  //   {
+  //     name: "SN PRINTERS",
+  //     city: "CHANDRAPUR",
+  //   },
+  //   {
+  //     name: "JANKI ENTERPRISES",
+  //     city: "NAGPUR",
+  //   },
+  //   {
+  //     name: "JAVED PRINTERS",
+  //     city: "NAGPUR",
+  //   },
+  //   {
+  //     name: "MOHURLE PRINTERS",
+  //     city: "CHANDRAPUR",
+  //   },
+  // ];
+  const [vendorList, setVendorList] = useState([]);
+  useEffect(() => {
+    // Fetch the list of vendors from the API
+    axiosInstance.get("/api/vendor")
+      .then((response) => {
+        // Assuming the response contains an array of vendors with name and city
+        console.log(response);
+        setVendorList(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching vendor list", error);
+      });
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({

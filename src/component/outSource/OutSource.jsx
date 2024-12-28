@@ -8,15 +8,15 @@ import { useNavigate } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 
 const OutSource = () => {
-  const [vendor, setVendor] = useState([]);
+  const [outsource, setOutsource] = useState([]);
   const [show, setShow] = useState(false);
   useEffect(() => {
     axiosInstance.get("/api/outsource").then((res) => {
-      setVendor(res.data);
+      setOutsource(res.data);
     });
   }, [show]);
 
-  const deleteVendor = async (vendorID) => {
+  const deleteVendor = async (outsourceID) => {
     const isConfirmed = await confirmationDialog({
       title: "Delete Order",
       text: "Are you sure you want to delete this order?",
@@ -25,10 +25,10 @@ const OutSource = () => {
     });
     if (isConfirmed) {
       axiosInstance
-        .delete(`/api/outsource/${vendorID}`)
+        .delete(`/api/outsource/${outsourceID}`)
         .then((res) => {
           toast.success(res.data.message);
-          setVendor((prev) => prev.filter((item) => item._id !== vendorID));
+          setOutsource((prev) => prev.filter((item) => item._id !== outsourceID));
         })
         .catch((err) => {
           toast.error(err.response.data.message);
@@ -285,7 +285,7 @@ const OutSource = () => {
         style={{ width: "100%", height: "80vh" }}
       >
         <AgGridReact
-          rowData={vendor}
+          rowData={outsource}
           columnDefs={columns}
           defaultColDef={defaultColDef}
           gridOptions={gridOptions}
